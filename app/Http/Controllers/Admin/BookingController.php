@@ -15,8 +15,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        
-       $list = Booking::paginate(config('app.settings.records_per_page'));
+       $per_page = config('app.settings.records_per_page');
+       $per_page = 2;
+       $list = Booking::paginate($per_page);
        return view('admin.pages.bookings.list',['list'=>$list]);
     }
 
