@@ -1,0 +1,30 @@
+.vc_custom_item1{
+    background-image: url(/images/homepage-2-bg.jpg?id=459) !important;
+}
+.vc_custom_item2{
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+.vc_custom_item3{
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
+}
+.vc_custom_item4{
+    background-image: url(/images/mobile.png?id=159) !important;
+}
+.vc_custom_item5{
+    margin-bottom: 0px !important;
+}
+.vc_custom_item6{
+    margin-bottom: 45px !important;
+}
+
+.page-header { background-image: url(/images/inner-bg.jpg) !important; } 
+.go-top:before { background-image: url(/images/footer-car.png) !important; } 
+.car-select-0 { background-image: url(/images/icon-car-1.png) !important; } 
+.car-select-1 { background-image: url(/images/icon-car-2.png) !important; } 
+.car-select-2 { background-image: url(/images/icon-car-3.png) !important; } 
+.car-select-3 { background-image: url(/images/icon-car-4.png) !important; 
+} 
+
