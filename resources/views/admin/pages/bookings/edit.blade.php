@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-10 col-lg-10">
             <div class="card">
-                <div class="card-header">Create Booking</div>
+                <div class="card-header">Edit Booking</div>
 
                 <div class="card-body">
                     @include('admin.pages.bookings.form')

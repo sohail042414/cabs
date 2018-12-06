@@ -16,6 +16,7 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('car_type');
+            $table->enum('status',['pending','confirmed','delayed','canceled','completed']);
             $table->string('from_address');
             $table->string('to_address');
             $table->string('phone');

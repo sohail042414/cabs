@@ -36,8 +36,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+
                         <li class="nav-item">
-                            <a href="{{ url('/admin/bookings')}}">Bookings
+                            <a class="nav-link" href="{{ url('/admin/bookings')}}">Bookings</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/faqs')}}">FAQs</a>
                         </li>
                     </ul>
 
@@ -78,7 +83,19 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @if(Session::has('status_success'))
+                <div class="alert alert-success">
+                    <strong>Success! &nbsp;</strong>{{ Session::get('status_success') }}
+                </div>
+                @endif
+                @if(Session::has('status_error'))
+                <div class="alert alert-danger">
+                    <strong>Error! &nbsp;</strong> {{ Session::get('status_error') }}
+                </div>
+                @endif
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>

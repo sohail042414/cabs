@@ -2,16 +2,16 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-2 col-lg-2">
-            @include('admin.pages.bookings.sidebar')
+    <div class="row ">
+        <div class="col-md-2">
+            @include('admin.pages.faqs.sidebar')
         </div>
         <div class="col-md-10 col-lg-10">
             <div class="card">
-                <div class="card-header">Create Booking</div>
+                <div class="card-header">Create Question.</div>
 
                 <div class="card-body">
-                    @include('admin.pages.bookings.form')
+                    @include('admin.pages.faqs.form')
                 </div>
             </div>
         </div>

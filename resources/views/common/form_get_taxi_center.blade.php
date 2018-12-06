@@ -1,5 +1,5 @@
 <form action="{{ url('/make-booking')}}" method="post" class="wpcf7-form" novalidate="novalidate">
-{{ csrf_field() }}
+    {{ csrf_field() }}
 
     <div class="menu-types">
         <a href="#" data-value="Standart" class="car-select-0  active">Standart</a>
@@ -10,18 +10,26 @@
         <input type="hidden" name="form_page" value="get-taxi">
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="geo-from-wrap">
+
+            <input data-geo-from="lat" type="hidden" id="from_latitude" name="from_latitude" value="">
+            <input data-geo-from="lng" type="hidden" id="from_longitude" name="from_longitude" value="">
+
             <label>
                 <span class="wpcf7-form-control-wrap address">
-                    <input type="text" name="from_address" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
+                    <input type="text" id="from_address" name="from_address" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
                         aria-required="true" aria-invalid="false" placeholder="From Address...">
                 </span>
             </label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="geo-to-wrap">
+
+            <input data-geo-to="lat" type="hidden" id="to_latitude" name="to_latitude" value="">
+            <input data-geo-to="lng" type="hidden" id="to_longitude" name="to_longitude" value="">
+
             <label>
                 <span class="wpcf7-form-control-wrap to">
-                    <input type="text" name="to_address" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
+                    <input id="to_address" type="text" name="to_address" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
                         aria-required="true" aria-invalid="false" placeholder="To...">
                 </span>
             </label>
@@ -53,8 +61,6 @@
     @endif
 
 
-
-
     @if ($errors->any())
 
     <div class="wpb_wrapper">
@@ -74,4 +80,19 @@
         </ul>
     </div>
     @endif
-</form
+</form>
+@include('geocode');
+<script>
+    //$("#from_address").geocomplete();
+
+    $("#from_address").geocomplete({
+        details: "#geo-from-wrap",
+        detailsAttribute: "data-geo-from"
+    });
+
+
+    $("#to_address").geocomplete({
+        details: "#geo-to-wrap",
+        detailsAttribute: "data-geo-to"
+    });
+</script>

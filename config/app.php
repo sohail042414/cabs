@@ -233,7 +233,7 @@ return [
         'email' => 'infouktaxiservice@gmail.com',
         'skype' => 'uk_cab',
         'address' => '43 2-nd Avenue, London, 29004-7153 (Testing)',
-        'records_per_page' => 10,
+        'records_per_page' => 5,
     ],
 
 ];

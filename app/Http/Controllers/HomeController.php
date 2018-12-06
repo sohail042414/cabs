@@ -40,22 +40,6 @@ class HomeController extends Controller
 
         $redirect_page = $request->input('form_page');
 
-        /*
-        $validatedData = $request->validate([
-            'from_address' => 'required',
-            'to_address' => 'required',
-            'car_type' => 'required',
-            'phone' => 'required',
-        ]);
-
-        $booking->from_address = $validatedData['from_address'];
-        $booking->to_address = $validatedData['to_address'];
-        $booking->car_type = $validatedData['car_type'];
-        //$booking->booking_date = request('booking_date');
-        $booking->booking_date = date('Y-m-d h:i:s',time());
-        $booking->phone = $validatedData['phone'];
-        */
-
         $this->validate($request,[
             'from_address' => 'required',
             'to_address' => 'required',
@@ -66,6 +50,7 @@ class HomeController extends Controller
         $booking->from_address = $request->input('from_address');
         $booking->to_address = $request->input('to_address');
         $booking->car_type = $request->input('car_type');
+        $booking->status = 'pending';
         //$booking->booking_date = request('booking_date');
         $booking->booking_date = date('Y-m-d h:i:s',time());
         $booking->phone = $request->input('phone');

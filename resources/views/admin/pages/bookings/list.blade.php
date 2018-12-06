@@ -2,11 +2,13 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-2 col-lg-2">
+            @include('admin.pages.bookings.sidebar')
+        </div>
+        <div class="col-md-10 col-lg-10">
             <div class="card">
                 <div class="card-header">Bookings</div>
-
                 <div class="card-body">
 
                     <table class="table">
@@ -17,6 +19,8 @@
                                 <th scope="col">To</th>
                                 <th scope="col">Car Type</th>
                                 <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,11 +32,17 @@
                                 <td>{{$booking->to_address}}</td>
                                 <td>{{$booking->car_type}}</td>
                                 <td>{{$booking->booking_date}}</td>
+                                <td>{{ ucfirst($booking->status)}}</td>
+                                <td>
+                                    <a href="/admin/bookings/{{$booking->id}}/edit/">
+                                        Edit
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                             <tr>
                                 <td colspan="5">
-                                    {{ $list->links() }}
+                                    {{ $list->links("pagination::bootstrap-4")}}
                                 </td>
                             </tr>
                         </tbody>
