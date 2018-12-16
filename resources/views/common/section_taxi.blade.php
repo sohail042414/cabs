@@ -7,7 +7,7 @@
                         <h4>Our operators are waiting for your call:</h4>
                         <h2>{{ config('app.settings.phone') }}</h2>
                     </div>
-                    <div class="wpb_text_column wpb_content_element  vc_custom_1495604727321">
+                    <div style="display:none;" class="wpb_text_column wpb_content_element  vc_custom_1495604727321">
                         <div class="wpb_wrapper">
                             <p class="form-label" style="text-align: center;">Also you can order a taxi online</p>
 

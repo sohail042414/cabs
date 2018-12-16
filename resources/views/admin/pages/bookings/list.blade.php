@@ -19,6 +19,7 @@
                                 <th scope="col">To</th>
                                 <th scope="col">Car Type</th>
                                 <th scope="col">Date</th>
+                                <th scope="col">Distance</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -32,6 +33,7 @@
                                 <td>{{$booking->to_address}}</td>
                                 <td>{{$booking->car_type}}</td>
                                 <td>{{$booking->booking_date}}</td>
+                                <td>{{$booking->distanceKilometers()}}</td>
                                 <td>{{ ucfirst($booking->status)}}</td>
                                 <td>
                                     <a href="/admin/bookings/{{$booking->id}}/edit/">

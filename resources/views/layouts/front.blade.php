@@ -29,6 +29,7 @@
     <!--<script src="{{ asset('taxi-park/scripts_theme.js') }}" defer></script>-->
     <script src="{{ asset('taxi-park/plugins.min.js') }}" defer>
     </script>
+        <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}" defer></script>  
 
     <!-- Fonts -->
 
@@ -50,6 +51,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">-->

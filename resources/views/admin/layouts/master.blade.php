@@ -44,6 +44,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/admin/faqs')}}">FAQs</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/tarrifs')}}">Tarrifs</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/services')}}">Services</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

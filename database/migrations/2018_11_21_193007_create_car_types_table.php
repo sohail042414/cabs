@@ -15,11 +15,12 @@ class CreateCarTypesTable extends Migration
     {
         Schema::create('car_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type',['standard','business','vip','van','bus'])->unique();
+            $table->enum('type', ['standard', 'business', 'vip', 'van', 'bus'])->unique();
             $table->string('title');
             $table->text('description');
             $table->text('image');
             $table->decimal('rate', 8, 2)->default(0);
+            $table->integer('capacity')->default(1);
             $table->timestamps();
         });
     }

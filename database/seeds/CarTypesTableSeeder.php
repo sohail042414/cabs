@@ -14,33 +14,37 @@ class CarTypesTableSeeder extends Seeder
         DB::table('car_types')->insert([
             'type' => 'standard',
             'title' => 'Standard',
-            'description'=>'Standard sedan for a drive around the city at your service',
+            'description' => 'Standard sedan for a drive around the city at your service',
             'rate' => 2,
-            'image'=>'tariff-1.png'
+            'capacity' => 4,
+            'image' => 'tariff-1.png'
         ]);
 
         DB::table('car_types')->insert([
             'type' => 'business',
             'title' => 'Business',
-            'description'=>'Business sedan for a drive around the city at your service',
-            'rate' => 2,
-            'image'=>'tariff-2.png'
+            'description' => 'Business sedan for a drive around the city at your service',
+            'rate' => 3,
+            'capacity' => 4,
+            'image' => 'tariff-2.png'
         ]);
 
         DB::table('car_types')->insert([
             'type' => 'vip',
             'title' => 'VIP',
-            'description'=>'VIP sedan for a drive around the city at your service',
-            'rate' => 2,  
-            'image'=>'tariff-3.png'          
+            'description' => 'VIP sedan for a drive around the city at your service',
+            'rate' => 2,
+            'capacity' => 3,
+            'image' => 'tariff-3.png'
         ]);
 
         DB::table('car_types')->insert([
             'type' => 'van',
             'title' => 'Mini Van',
-            'description'=>'Mini Van sedan for a drive around the city at your service',
+            'description' => 'Mini Van sedan for a drive around the city at your service',
             'rate' => 2,
-            'image'=>'tariff-4.png'
+            'capacity' => 10,
+            'image' => 'tariff-4.png'
         ]);
     }
 }
