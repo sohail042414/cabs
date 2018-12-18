@@ -1,15 +1,12 @@
 <form action="{{ url('/make-booking')}}" method="post" class="wpcf7-form" novalidate="novalidate">
     {{ csrf_field() }}
-    <div style="display: none;">
-        <input type="hidden" name="form_page" value="home">
-    </div>
     <div class="menu-types">
         <a href="#" data-rate="2" id="standard" data-value="standard" class="car-select-0  active">Standard</a>
         <a href="#" data-rate="2.7" id="business" data-value="business" class="car-select-1 ">Business</a>
         <a href="#" data-rate="5" id="vip" data-value="vip" class="car-select-2 red">VIP</a>
         <a href="#" data-rate="4.5" id="van" data-value="van" class="car-select-3 ">Bus-Minivan</a>
         <input type="hidden" class="type-value" value="standard" name="car_type" id="car_type">
-        <input type="hidden" name="form_page" value="get-taxi">
+        <input type="hidden" name="form_page" value="home">
     </div>
     <div class="row">
         <div class="col-md-8" id="geo-from-wrap">
