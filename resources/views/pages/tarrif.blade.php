@@ -21,13 +21,12 @@
                     <div class="entry-content clearfix">
                         @include('common.section_tarrif')
                         <div class="vc_row-full-width vc_clearfix"></div>
+                        @include('common.section_services')
                     </div>
                 </article>
             </div>
-
         </div>
     </div>
-
 </div>
 
 @include('common.section_clients')

@@ -17,7 +17,9 @@ Route::get('/', function () {
  */
 
 
-Route::get('/', 'HomeController@index');
+//Route::get('/', 'HomeController@index');
+
+Route::get('/', 'PagesController@get_taxi');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
@@ -28,6 +30,10 @@ Route::get('/get-taxi', 'PagesController@get_taxi');
 Route::get('/tarrif', 'PagesController@tarrif');
 Route::get('/team', 'PagesController@team');
 Route::get('/earn-with-us', 'PagesController@earn');
+
+Route::get('/questions-answers', 'PagesController@faqs');
+
+Route::get('/terms-conditions', 'PagesController@terms');
 
 //forms
 Route::post('/make-booking', 'HomeController@make_booking');
@@ -40,6 +46,8 @@ Route::resource('/admin/faqs', 'Admin\FaqController');
 Route::resource('/admin/bookings', 'Admin\BookingController');
 Route::resource('/admin/tarrifs', 'Admin\TarrifController');
 Route::resource('/admin/services', 'Admin\ServiceController');
+Route::resource('/admin/terms', 'Admin\TermsController');
+
 
 Route::get('/admin', 'Admin\AdminController@index');
 

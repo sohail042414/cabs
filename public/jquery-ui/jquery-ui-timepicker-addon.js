@@ -1,12 +1,6 @@
-/*
- * jQuery Timepicker Addon
- * By: Trent Richardson [http://trentrichardson.com]
- *
- * Copyright 2013 Trent Richardson
- * You may use this project under MIT license.
- * http://trentrichardson.com/Impromptu/MIT-LICENSE.txt
- */
-
+/*! jQuery Timepicker Addon - v1.6.3 - 2016-04-20
+* http://trentrichardson.com/examples/timepicker
+* Copyright (c) 2016 Trent Richardson; Licensed MIT */
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery', 'jquery-ui'], factory);
@@ -28,7 +22,7 @@
 	*/
 	$.extend($.ui, {
 		timepicker: {
-			version: "@@version"
+			version: "1.6.3"
 		}
 	});
 
@@ -2292,6 +2286,6 @@
 	/*
 	* Keep up with the version
 	*/
-	$.timepicker.version = "@@version";
+	$.timepicker.version = "1.6.3";
 
 }));

@@ -16,6 +16,7 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('car_type');
+            $table->enum('mode', ['one_way', 'two_way'])->default('one_way');
             $table->enum('status', ['pending', 'confirmed', 'delayed', 'canceled', 'completed']);
             $table->string('from_address');
             $table->decimal('from_lat', 16, 14)->default(0);
@@ -23,6 +24,9 @@ class CreateBookingsTable extends Migration
             $table->string('to_address');
             $table->decimal('to_lat', 16, 14)->default(0);
             $table->decimal('to_lng', 16, 14)->default(0);
+            $table->string('email');
+            $table->smallInteger('passangers')->default(2);
+            $table->boolean('terminal_pickup')->default(true);
             $table->string('phone');
             $table->dateTime('booking_date');
             $table->decimal('distance', 8, 2)->default(0);

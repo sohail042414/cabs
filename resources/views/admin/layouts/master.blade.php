@@ -46,6 +46,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/terms')}}">Terms (T&C)</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('/admin/tarrifs')}}">Tarrifs</a>
                         </li>
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Faq;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
-class FaqController extends Controller
+class TermsController extends Controller
 {
 
     public function __construct()
@@ -23,9 +23,9 @@ class FaqController extends Controller
     {
 
         $per_page = config('app.settings.records_per_page');
-        $list = Faq::paginate($per_page);
+        $list = Term::paginate($per_page);
 
-        return view('admin.pages.faqs.list', ['list' => $list]);
+        return view('admin.pages.terms.list', ['list' => $list]);
     }
 
     /**
@@ -35,8 +35,10 @@ class FaqController extends Controller
      */
     public function create()
     {
-        $faq = new Faq;
-        return view('admin.pages.faqs.create', array('faq' => $faq, 'action' => 'create'));
+        $term = new Term;
+
+
+        return view('admin.pages.terms.create', array('term' => $term, 'action' => 'create'));
     }
 
     /**
@@ -50,31 +52,31 @@ class FaqController extends Controller
         //
         $this->validate($request, [
             'sort_order' => 'numeric',
-            'question' => 'required|min:10',
-            'answer' => 'required|min:50',
+            'title' => 'required|min:10',
+            'text' => 'required|min:50',
         ]);
 
-        $faq = new Faq();
-        $faq->sort_order = $request->input('sort_order');
-        $faq->question = $request->input('question');
-        $faq->answer = $request->input('answer');
-        if ($faq->save()) {
-            $request->session()->flash('status_success', 'Faq created successfully!');
+        $term = new Term();
+        $term->sort_order = $request->input('sort_order');
+        $term->title = $request->input('title');
+        $term->text = $request->input('text');
+        if ($term->save()) {
+            $request->session()->flash('status_success', 'Term created successfully!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/faqs');
+        return redirect('/admin/terms');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faq  $faq
+     * @param  \App\Models\Term  $term
      * @return \Illuminate\Http\Response
      */
-    public function show(Faq $faq)
+    public function show(Term $term)
     {
         //
         //pending
@@ -87,51 +89,51 @@ class FaqController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faq  $faq
+     * @param  \App\Models\Term  $term
      * @return \Illuminate\Http\Response
      */
-    public function edit(Faq $faq)
+    public function edit(Term $term)
     {
-        return view('admin.pages.faqs.edit', array('faq' => $faq, 'action' => 'update'));
+        return view('admin.pages.terms.edit', array('Term' => $term, 'action' => 'update'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faq  $faq
+     * @param  \App\Models\Term  $term
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Faq $faq)
+    public function update(Request $request, Term $term)
     {
 
         $this->validate($request, [
             'sort_order' => 'numeric',
-            'question' => 'required|min:10',
-            'answer' => 'required|min:50',
+            'title' => 'required|min:10',
+            'text' => 'required|min:50',
         ]);
 
-        $faq->sort_order = $request->input('sort_order');
-        $faq->question = $request->input('question');
-        $faq->answer = $request->input('answer');
+        $term->sort_order = $request->input('sort_order');
+        $term->title = $request->input('title');
+        $term->text = $request->input('text');
 
-        if ($faq->save()) {
-            $request->session()->flash('status_success', 'Faq updated successfully!');
+        if ($term->save()) {
+            $request->session()->flash('status_success', 'Term updated successfully!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/faqs/' . $faq->id . '/edit');
+        return redirect('/admin/terms/' . $term->id . '/edit');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Faq  $faq
+     * @param \App\Models\Term  $term
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faq $faq)
+    public function destroy(Term $term)
     {
         //
     }

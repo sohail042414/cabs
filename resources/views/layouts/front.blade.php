@@ -29,10 +29,8 @@
     <!--<script src="{{ asset('taxi-park/scripts_theme.js') }}" defer></script>-->
     <script src="{{ asset('taxi-park/plugins.min.js') }}" defer>
     </script>
-        <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}" defer></script>  
-
+ 
     <!-- Fonts -->
-
     <link href="{{ asset('taxi-park/font.css') }}" rel="stylesheet">
     <link href="{{ asset('taxi-park/typcn.css') }}" rel="stylesheet">
     <link href="{{ asset('taxi-park/unycon.css') }}" rel="stylesheet">
@@ -51,8 +49,6 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
-
     <!-- Styles -->
     <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="{{ asset('taxi-park/bootstrap-grid.css') }}" rel="stylesheet">
@@ -65,6 +61,7 @@
 <body class="home page-template-default page page-id-10 logged-in admin-bar masthead-fixed full-width footer-widgets grid wpb-js-composer js-comp-ver-5.5.2 vc_responsive  customize-support pace-done">
 
     <div id="preloader"></div>
+    
     @include('common.header_home')
 
     @yield('content')

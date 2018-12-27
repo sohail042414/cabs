@@ -1,3 +1,12 @@
+
+<script src="{{ asset('jquery-ui/jquery-1.11.1.min.js') }}" defer></script>  
+<script src="{{ asset('jquery-ui/jquery-ui.min.js') }}" defer></script>  
+<script src="{{ asset('jquery-ui/jquery-ui-timepicker-addon.js') }}" defer></script>  
+
+<link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
+<link href="{{ asset('jquery-ui/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
+
+
 <form action="{{ url('/make-booking')}}" method="post" class="wpcf7-form" novalidate="novalidate">
     {{ csrf_field() }}
 
@@ -22,18 +31,22 @@
                 </span>
             </label>
         </div>
-        <div class="col-md-12 col-lg-12" id="geo-to-wrap">
+    </div>
+    <div class="row">
+            <div class="col-md-12 col-lg-12" id="geo-to-wrap">
 
-            <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="">
-            <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="">
+                <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="">
+                <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="">
 
-            <label>
-                <span class="wpcf7-form-control-wrap to">
-                    <input id="to_address" type="text" name="to_address" value="" size="40" class="wpcf7-form-control address"
-                        aria-required="true" aria-invalid="false" placeholder="To...">
-                </span>
-            </label>
-        </div>
+                <label>
+                    <span class="wpcf7-form-control-wrap to">
+                        <input id="to_address" type="text" name="to_address" value="" size="40" class="wpcf7-form-control address"
+                            aria-required="true" aria-invalid="false" placeholder="To...">
+                    </span>
+                </label>
+            </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <label>
                 <span class="wpcf7-form-control-wrap phone">
@@ -51,6 +64,57 @@
             </label>            
         </div>
     </div>
+
+    <div class="row">
+
+        <div class="col-md-8 col-lg-8">
+            <label>
+                <span class="wpcf7-form-control-wrap ">
+                    <input type="text" name="email" value="" class="wpcf7-form-control wpcf7-text"
+                        aria-required="true" aria-invalid="false" placeholder="Email">
+                </span>
+            </label>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <label>
+                <span class="wpcf7-form-control-wrap select-menu">
+                    <div class="select-wrap">
+                        <select name="select-menu" class="wpcf7-form-control wpcf7-select" aria-invalid="false">
+                            <option value="one_way">One Way</option>
+                            <option value="two_way">Two Way</option>
+                        </select>
+                    </div>
+                </span> 
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 col-lg-6">
+            <label>Passangers<br>
+                <span class="wpcf7-form-control-wrap ">
+                    <input type="text" name="" value="2" class="wpcf7-form-control wpcf7-text"
+                        aria-required="true" aria-invalid="false" placeholder="">
+                </span>
+            </label>
+        </div>
+
+        <div class="col-md-6">            
+            <span class="wpcf7-form-control-wrap checkbox-347">
+                <span class="wpcf7-form-control wpcf7-checkbox">
+                    <span class="wpcf7-list-item first last">
+                        <label>
+                            <br>
+                            <input type="checkbox" name="checkbox-347[]" value="Select checkbox" checked="checked">
+                            <span class="wpcf7-list-item-label">Pickup from terminal ($5)</span>
+                        </label>
+                    </span>
+                </span>
+            </span>        
+        </div>
+    </div>
+
     <p id="estimates" style="display:none;">
         <span id="span_distance" style="float:left;">Distance :</span> 
         <span id="span_fare" style="float:right;">Estimated Fare :</span>
@@ -115,14 +179,14 @@
 
     }
 
-
     //$("#from_address").geocomplete();
     $(document).ready(function(){
-
-        $('#booking_date').datepicker({
+        //$('#booking_date').datetimepicker();        
+        $('#booking_date').datetimepicker({
             dateFormat:'yy-mm-dd',
             minDate: 0,
         }).datepicker("setDate", new Date());
+        
     });
 
     jQuery('.menu-types').on('click', 'a', function() {

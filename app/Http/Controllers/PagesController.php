@@ -33,7 +33,7 @@ class PagesController extends Controller
     {
         $booking_status = request()->session()->get('booking_status', 'no');
 
-        return view('pages.get_taxi',['booking_status'=>$booking_status]);
+        return view('pages.get_taxi', ['booking_status' => $booking_status]);
     }
     /**
      * Show the tarrif us page.
@@ -53,6 +53,32 @@ class PagesController extends Controller
     public function team()
     {
         return view('pages.team');
+    }
+
+    /**
+     * Show the faqs page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function faqs()
+    {
+        $faqs = \App\Models\Faq::orderBy('sort_order')->get();
+
+        return view('pages.faqs', array('faqs' => $faqs));
+    }
+
+    /**
+     * Show the terms and condititions page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function terms()
+    {
+        $terms = \App\Models\Term::orderBy('sort_order')->get();
+
+        return view('pages.terms', array('terms' => $terms));
     }
 
     /**
