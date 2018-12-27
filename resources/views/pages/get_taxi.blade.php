@@ -3,6 +3,15 @@
 @section('content')
 
 @include('common.navbar_main')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .ui-datepicker .ui-datepicker-header {
+        position: relative;
+        display: block;
+        padding: .2em 0;
+        background-color: #FFC61A !important;
+    }
+</style>
 
 <header class="page-header">
     <div class="container">

@@ -15,18 +15,18 @@
         <a href="#" data-rate="2.7" id="business" data-value="business" class="car-select-1 ">Business</a>
         <a href="#" data-rate="5" id="vip" data-value="vip" class="car-select-2 red">VIP</a>
         <a href="#" data-rate="4.5" id="van" data-value="van" class="car-select-3 ">Bus-Minivan</a>
-        <input type="hidden" class="type-value" value="standard" name="car_type" id="car_type">
+        <input type="hidden" class="type-value" value="{{ old('car_type','standard') }}" name="car_type" id="car_type">
         <input type="hidden" name="form_page" value="get-taxi">
     </div>
     <div class="row">
         <div class="col-md-12 col-lg-12" id="geo-from-wrap">
 
-            <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="">
-            <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="">
+            <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
+            <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="{{ old('from_lng') }}">
 
             <label>
                 <span class="wpcf7-form-control-wrap address">
-                    <input type="text" id="from_address" name="from_address" value="" size="40" class="wpcf7-form-control address"
+                    <input type="text" id="from_address" name="from_address" value="{{ old('from_address') }}" size="40" class="wpcf7-form-control address"
                         aria-required="true" aria-invalid="false" placeholder="From Address...">
                 </span>
             </label>
@@ -35,12 +35,12 @@
     <div class="row">
             <div class="col-md-12 col-lg-12" id="geo-to-wrap">
 
-                <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="">
-                <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="">
+                <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="{{ old('to_lat')}}">
+                <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="{{ old('to_lng')}}">
 
                 <label>
                     <span class="wpcf7-form-control-wrap to">
-                        <input id="to_address" type="text" name="to_address" value="" size="40" class="wpcf7-form-control address"
+                        <input id="to_address" type="text" name="to_address" value="{{ old('to_address') }}" size="40" class="wpcf7-form-control address"
                             aria-required="true" aria-invalid="false" placeholder="To...">
                     </span>
                 </label>
@@ -50,7 +50,7 @@
         <div class="col-md-6">
             <label>
                 <span class="wpcf7-form-control-wrap phone">
-                    <input type="text" name="phone" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
+                    <input type="text" name="phone" value="{{ old('phone')}}" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
                         aria-required="true" aria-invalid="false" placeholder="Phone Number">
                 </span>
             </label>
@@ -58,7 +58,7 @@
         <div class="col-md-6">            
             <label>
                 <span class="wpcf7-form-control-wrap your-date">
-                    <input type="text" id="booking_date" name="booking_date" placeholder="Date" class="wpcf7-form-control"
+                    <input type="text" value="{{ old('text')}}" id="booking_date" name="booking_date" placeholder="Date" class="wpcf7-form-control"
                             aria-required="true" aria-invalid="false" autocomplete="off">
                 </span>
             </label>            
@@ -70,7 +70,7 @@
         <div class="col-md-8 col-lg-8">
             <label>
                 <span class="wpcf7-form-control-wrap ">
-                    <input type="text" name="email" value="" class="wpcf7-form-control wpcf7-text"
+                    <input type="text" name="email" value="{{ old('email')}}" class="wpcf7-form-control wpcf7-text"
                         aria-required="true" aria-invalid="false" placeholder="Email">
                 </span>
             </label>
@@ -79,9 +79,9 @@
             <label>
                 <span class="wpcf7-form-control-wrap select-menu">
                     <div class="select-wrap">
-                        <select name="select-menu" class="wpcf7-form-control wpcf7-select" aria-invalid="false">
-                            <option value="one_way">One Way</option>
-                            <option value="two_way">Two Way</option>
+                        <select name="mode" class="wpcf7-form-control wpcf7-select" aria-invalid="false" style="height: 46px;">
+                            <option @if(old('mode') =='one_way') selected="selected" @endif value="one_way">One Way</option>
+                            <option @if(old('mode') =='two_way') selected="selected" @endif value="two_way">Two Way</option>
                         </select>
                     </div>
                 </span> 
@@ -94,7 +94,7 @@
         <div class="col-md-6 col-lg-6">
             <label>Passangers<br>
                 <span class="wpcf7-form-control-wrap ">
-                    <input type="text" name="" value="2" class="wpcf7-form-control wpcf7-text"
+                    <input type="text" name="" value="{{ old('passangers','2')}}" class="wpcf7-form-control wpcf7-text"
                         aria-required="true" aria-invalid="false" placeholder="">
                 </span>
             </label>
@@ -106,7 +106,7 @@
                     <span class="wpcf7-list-item first last">
                         <label>
                             <br>
-                            <input type="checkbox" name="checkbox-347[]" value="Select checkbox" checked="checked">
+                            <input type="checkbox" name="terminal_pickup" id="terminal_pickup" value="1" checked="checked">
                             <span class="wpcf7-list-item-label">Pickup from terminal ($5)</span>
                         </label>
                     </span>
@@ -169,6 +169,11 @@
             distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
             var fare_total = rate*distance;
             fare_total = parseFloat(Math.round(fare_total * 100) / 100).toFixed(2);
+            
+            if($('#terminal_pickup').is(":checked")){
+                fare_total = fare_total+5;
+            }
+
             $('#span_distance').html('Distance: '+distance+'km');  
             $('#span_fare').html('Estimated Fare: $'+fare_total);      
 
@@ -178,6 +183,10 @@
         }
 
     }
+
+    $("#terminal_pickup").change(function() {
+        set_fare_distance();
+    });
 
     //$("#from_address").geocomplete();
     $(document).ready(function(){
