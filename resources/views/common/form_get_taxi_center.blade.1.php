@@ -10,18 +10,11 @@
     {{ csrf_field() }}
 
     <div class="menu-types">
-        @foreach($tarrifs as $tarrif)
-        <a href="#" 
-        data-rate="{{$tarrif->rate}}" 
-        id="{{$tarrif->type}}" 
-        data-value="{{$tarrif->type}}" 
-        class="car-select-{{$tarrif->type}} @if($tarrif->type ==old('car_type') || (old('car_type')=='' && $tarrif->type =='standard')) active @endif">
-        {{$tarrif->title}}</a>
-        @endforeach
+        <a href="#" data-rate="2" id="standard" data-value="standard" class="car-select-0  active">Standard</a>
+        <a href="#" data-rate="2.7" id="business" data-value="business" class="car-select-1 ">Business</a>
+        <a href="#" data-rate="5" id="vip" data-value="vip" class="car-select-2 red">VIP</a>
+        <a href="#" data-rate="4.5" id="van" data-value="van" class="car-select-3 ">Bus-Minivan</a>
         <input type="hidden" class="type-value" value="{{ old('car_type','standard') }}" name="car_type" id="car_type">
-        <input type="hidden" value="{{ old('distance','0') }}" name="distance" id="distance">
-        <input type="hidden" value="{{ old('rate') }}" name="rate" id="rate">
-        <input type="hidden" value="{{ old('amount') }}" name="amount" id="amount">
         <input type="hidden" name="form_page" value="get-taxi">
     </div>
     <div class="row">
@@ -138,7 +131,7 @@
                     <span class="wpcf7-list-item first last">
                         <label>
                             <br>
-                            <input type="checkbox" name="terminal_pickup" id="terminal_pickup" value="1" >
+                            <input type="checkbox" name="terminal_pickup" id="terminal_pickup" value="1" checked="checked">
                             <span class="wpcf7-list-item-label">Pickup from terminal ($5)</span>
                         </label>
                     </span>
@@ -164,12 +157,11 @@
     width:112px;
 }
 .error-text{
-    background-color: #FFC61A;
-    color: red;
-    height: 20px;
+    background-color: #1F1F1F;
+    color: #FFC61A;
+    height: 43px;
     vertical-align: middle;
-    text-align:left;
-    line-height: 0.6;
+    line-height: 2.6;
     width: 100%;
     font-weight: bold;
 }
@@ -188,16 +180,12 @@
         if((from_lat != '') && (from_lng != '') && (to_lng != '') &&(to_lng != '')){        
             var distance = get_distance(from_lat,from_lng,to_lat,to_lng,'K');
             distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
-            $('#distance').val(distance);
             var fare_total = rate*distance;
             fare_total = parseFloat(Math.round(fare_total * 100) / 100).toFixed(2);
-                        
+            
             if($('#terminal_pickup').is(":checked")){
                 fare_total = fare_total+5;
             }
-
-            $('#amount').val(fare_total);
-            $('#rate').val(rate);
 
             $('#span_distance').html('Distance: '+distance+'km');  
             $('#span_fare').html('Estimated Fare: $'+fare_total);      

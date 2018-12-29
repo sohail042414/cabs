@@ -22,9 +22,9 @@
 
 .page-header { background-image: url(/images/inner-bg.jpg) !important; } 
 .go-top:before { background-image: url(/images/footer-car.png) !important; } 
-.car-select-0 { background-image: url(/images/icon-car-1.png) !important; } 
-.car-select-1 { background-image: url(/images/icon-car-2.png) !important; } 
-.car-select-2 { background-image: url(/images/icon-car-3.png) !important; } 
-.car-select-3 { background-image: url(/images/icon-car-4.png) !important; 
+.car-select-standard { background-image: url(/images/icon-car-1.png) !important; } 
+.car-select-business { background-image: url(/images/icon-car-2.png) !important; } 
+.car-select-vip { background-image: url(/images/icon-car-3.png) !important; } 
+.car-select-van { background-image: url(/images/icon-car-4.png) !important; 
 } 
 

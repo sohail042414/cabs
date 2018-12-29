@@ -39,6 +39,9 @@
                                     <a href="/admin/bookings/{{$booking->id}}/edit/">
                                         Edit
                                     </a>
+                                    <a href="/admin/bookings/{{$booking->id}}">
+                                        View
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach

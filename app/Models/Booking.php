@@ -18,6 +18,15 @@ class Booking extends BaseModel
         );
     }
 
+
+    public function modeList()
+    {
+        return array(
+            'one_way' => 'One Way',
+            'two_way' => 'Two Way',
+        );
+    }
+
     public function getDistance()
     {
         return $this->distanceMiles();

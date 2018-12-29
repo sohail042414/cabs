@@ -39,9 +39,61 @@
     </div>
 
     <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ old('email',$booking->email) }}" id="email" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="passangers">Passangers</label>
+        <input type="text" name="passangers" value="{{ old('passangers',$booking->passangers) }}" id="passangers" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="mode">Mode</label>    
+        <select name="mode" id="mode" class="form-control">        
+            <option value="">Select</option>
+                @foreach($modes as $mode => $title)
+                @if($mode == old('mode') || $mode == $booking->mode))
+                <option selected="selected" value="{{$mode}}"> {{$title}} </option>
+                @else
+                <option value="{{$mode}}"> {{$title}} </option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="booking_date">Date & time</label>
         <input type="text" name="booking_date" value="{{ old('booking_date',$booking->booking_date) }}" id="phone"
             class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="distance">Distance (km)</label>
+        <input type="text" name="distance" value="{{ old('distance',$booking->distance) }}" id="distance" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="rate">Rate</label>
+        <input type="text" name="rate" value="{{ old('rate',$booking->rate) }}" id="rate" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <input 
+        @if(old('terminal_pickup') == 1 || $booking->terminal_pickup ==1) checked="checked" @endif
+        type="checkbox" 
+        name="terminal_pickup" 
+        id="terminal_pickup" value="1">
+        <label for="terminal_pickup">Pick Up from Terminal</label>
+    </div>
+
+    <div class="form-group">
+        <label for="amount">Amount (Fare)</label>
+        <input type="text" name="amount" value="{{ old('amount',$booking->amount) }}" id="amount" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="discount">Discount</label>
+        <input type="text" name="discount" value="{{ old('discount',$booking->discount) }}" id="discount" class="form-control">
     </div>
 
     <div class="form-group">
@@ -56,11 +108,6 @@
             @endif
             @endforeach
         </select>
-    </div>
-
-    <div class="form-group">
-        <label for="discount">Discount</label>
-        <input type="text" name="discount" value="{{ old('discount',$booking->discount) }}" id="discount" class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

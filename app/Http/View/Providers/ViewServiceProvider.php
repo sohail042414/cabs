@@ -29,10 +29,16 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('tarrifs', $tarrifs);
         });
 
-                // Using Closure based composers...
+        // Using Closure based composers...
         View::composer('common.section_services', function ($view) {
             $services = Service::paginate(4);
             $view->with('services', $services);
+        });
+
+        // Using Closure based composers...
+        View::composer('common.form_get_taxi_center', function ($view) {
+            $tarrifs = Tarrif::paginate(4);
+            $view->with('tarrifs', $tarrifs);
         });
     }
 

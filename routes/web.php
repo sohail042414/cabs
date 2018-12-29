@@ -37,6 +37,9 @@ Route::get('/terms-conditions', 'PagesController@terms');
 
 //forms
 Route::post('/make-booking', 'HomeController@make_booking');
+//display booking
+Route::get('/confirmation/{booking_id}', 'HomeController@confirmation');
+
 
 /**
  * Admin routes
@@ -44,6 +47,7 @@ Route::post('/make-booking', 'HomeController@make_booking');
 Route::resource('/admin/faqs', 'Admin\FaqController');
 
 Route::resource('/admin/bookings', 'Admin\BookingController');
+Route::get('/admin/bookings/confirm/{id}', 'Admin\BookingController@confirm');
 Route::resource('/admin/tarrifs', 'Admin\TarrifController');
 Route::resource('/admin/services', 'Admin\ServiceController');
 Route::resource('/admin/terms', 'Admin\TermsController');

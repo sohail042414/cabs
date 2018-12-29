@@ -65,9 +65,14 @@ class BookingController extends Controller
             'from_address' => 'required',
             'to_address' => 'required',
             'phone' => 'required|min:11|max:14',
+            'email' => 'required|email',
             'booking_date' => 'required',
             'status' => 'required',
-            'discount' => 'sometimes|numeric'
+            'discount' => 'sometimes|numeric',
+            'rate' => 'required|numeric',
+            'distance' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'passangers' => 'required|numeric'
         ]);
 
         $booking = new Booking();
@@ -96,8 +101,34 @@ class BookingController extends Controller
      */
     public function show($id)
     {
+        $booking = Booking::find($id);
+
+        // echo "<pre>";
+        // print_r($booking->getAttributes());
+        // exit;
+        return view(
+            'admin.pages.bookings.show',
+            array(
+                'booking' => $booking
+            )
+        );
         //
     }
+
+    public function confirm(Request $request, $id)
+    {
+        $booking = Booking::find($id);
+
+        $booking->status = 'confirmed';
+        if ($booking->save()) {
+            $request->session()->flash('status_success', 'Booking confirmed!');
+        } else {
+            $request->session()->flash('status_error', 'There was some error please try again!');
+        }
+
+        return redirect('/admin/bookings/' . $id);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -111,11 +142,14 @@ class BookingController extends Controller
 
         $status_list = $booking->statusList();
 
+        $modes = $booking->modeList();
+
         return view(
             'admin.pages.bookings.edit',
             array(
                 'booking' => $booking,
                 'car_types' => $car_types,
+                'modes' => $modes,
                 'status_list' => $status_list,
                 'action' => 'edit'
             )
@@ -138,9 +172,14 @@ class BookingController extends Controller
             'from_address' => 'required',
             'to_address' => 'required',
             'phone' => 'required|min:11|max:14',
+            'email' => 'required|email',
             'booking_date' => 'required',
             'status' => 'required',
-            'discount' => 'sometimes|numeric'
+            'discount' => 'sometimes|numeric',
+            'rate' => 'required|numeric',
+            'distance' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'passangers' => 'required|numeric'
         ]);
 
         $booking->car_type = $request->input('car_type');
@@ -148,8 +187,14 @@ class BookingController extends Controller
         $booking->to_address = $request->input('to_address');
         $booking->car_type = $request->input('car_type');
         $booking->phone = $request->input('phone');
-        //$faq->booking_date = $request->input('booking_date');
-        $booking->booking_date = date('Y-m-d h:i:s', time());
+        $booking->booking_date = $request->input('booking_date');
+        //$booking->booking_date = date('Y-m-d h:i:s', time());
+        $booking->mode = $request->input('mode');
+        $booking->passangers = $request->input('passangers');
+        $booking->rate = $request->input('rate');
+        $booking->distance = $request->input('distance');
+        $booking->email = $request->input('email');
+        $booking->amount = $request->input('amount');
         $booking->discount = $request->input('discount');
         if ($booking->save()) {
             $request->session()->flash('status_success', 'Booking updated successfully!');
