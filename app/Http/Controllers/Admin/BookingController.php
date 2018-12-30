@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CarType;
+use App\Models\SimpleMail;
 
 class BookingController extends Controller
 {
@@ -121,12 +122,49 @@ class BookingController extends Controller
 
         $booking->status = 'confirmed';
         if ($booking->save()) {
+            $this->sendConfirmationEmail($booking);
             $request->session()->flash('status_success', 'Booking confirmed!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
         return redirect('/admin/bookings/' . $id);
+    }
+
+
+    private function sendConfirmationEmail(Booking $booking)
+    {
+
+        $subject = "Booking Confirmed!!!!!!!!!!!!";
+        $message = "Your Booking has been confirmed, you driver will be available at pickup location 20 minutes before said time!";
+        $message .= "Have any quries, contact at chawal fraz dot com.....<br>";
+        $message .= "Booking Date/time :" . $booking->booking_date . "<br>";
+        $message .= "Pickup address :" . $booking->from_address . "<br>";;
+        $message .= "Drop off :" . $booking->to_address . "<br>";;
+        $message .= "Distance :" . $booking->distance . "<br>";;
+        $message .= "Type :" . $booking->car_type . "<br>";;
+        $message .= "Rate :" . $booking->rate . "<br>";
+        $message .= "Fare :" . $booking->amount . "<br>";
+
+        $message .= "Driver Name : Chawal driver...<br>";
+        $message .= "Driver mobile : 023232323232...<br>";
+        $message .= "OK Yashi kr....<br>";
+
+        $message .= " <br> Have nice Trip............!!!!";
+
+        $status = SimpleMail::make()
+            ->setTo($booking->email, "Customer")
+            ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
+            ->setSubject($subject)
+            ->setMessage($message)
+            ->setReplyTo('uktaximanager@gmail.com', 'Uk Taxi Manager')
+            ->setHtml()
+            ->setWrap(100)
+            ->send();
+        if (!$status) {
+            echo "Email not sent";
+            exit;
+        }
     }
 
 

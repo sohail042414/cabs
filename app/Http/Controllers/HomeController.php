@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BookingConirmation;
 use App\Models\Booking;
+use App\Models\SimpleMail;
 use Illuminate\Http\Request;
+use App\Mail\BookingConfirmation;
 
 class HomeController extends Controller
 {
@@ -97,9 +101,74 @@ class HomeController extends Controller
     {
 
         $booking = Booking::find($booking_id);
+
+        $this->sendCustomerEmail($booking);
+
+        $this->sendMangerEmail($booking);
+
+        //Mail::to($booking->email)->send(new BookingConfirmation($booking));
+
         return view('pages.confirmation', ['booking' => $booking]);
+    }
 
+    private function sendCustomerEmail(Booking $booking)
+    {
 
+        $subject = "Booking Request Received";
+        $message = "We have received you request for taxi, we are reviewing booking details, will confirm you booking soon!";
+        $message .= "Booking Date/time :" . $booking->booking_date . "<br>";
+        $message .= "Pickup address :" . $booking->from_address . "<br>";;
+        $message .= "Drop off :" . $booking->to_address . "<br>";;
+        $message .= "Distance :" . $booking->distance . "<br>";;
+        $message .= "Type :" . $booking->car_type . "<br>";;
+        $message .= "Rate :" . $booking->rate . "<br>";;
+        $message .= "Fare :" . $booking->amount . "<br>";
+
+        $message .= "<br><b> To check status of your Booking at any time, click herer!! </b>";
+
+        $message .= " <br> Thank you for choosing our service!!!!";
+
+        $status = SimpleMail::make()
+            ->setTo($booking->email, "Customer")
+            ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
+            ->setSubject($subject)
+            ->setMessage($message)
+            ->setReplyTo('uktaximanager@gmail.com', 'Uk Taxi Manager')
+            ->setHtml()
+            ->setWrap(100)
+            ->send();
+        if (!$status) {
+            echo "Email not sent";
+            exit;
+        }
+    }
+
+    private function sendMangerEmail(Booking $booking)
+    {
+        $subject = "Booking Request Received (Tarr Ai Ae Faraz!!!!)";
+        $message = "You have received you request for taxi, Kindly review and assign a driver!";
+        $message .= "Booking Date/time :" . $booking->booking_date . "<br>";
+        $message .= "Pickup address :" . $booking->from_address . "<br>";;
+        $message .= "Drop off :" . $booking->to_address . "<br>";;
+        $message .= "Distance :" . $booking->distance . "<br>";;
+        $message .= "Type :" . $booking->car_type . "<br>";;
+        $message .= "Rate :" . $booking->rate . "<br>";;
+        $message .= "Fare :" . $booking->amount . "<br>";;
+        $message .= " <br> Your business is growing day by day, Thank You SOhail!!!!";
+
+        $status = SimpleMail::make()
+            ->setTo('naumankhan051@gmail.com', "Chawal Bossss")
+            ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
+            ->setSubject($subject)
+            ->setMessage($message)
+            ->setReplyTo('uktaximanager@gmail.com', 'Uk Taxi Manager')
+            ->setHtml()
+            ->setWrap(100)
+            ->send();
+        if (!$status) {
+            echo "Email not sent";
+            exit;
+        }
     }
 
     private function formatLatLng($input)

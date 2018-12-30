@@ -50,10 +50,11 @@
                                         <p>From : {{$booking->from_address}}</p>
                                         <p>To : {{$booking->to_address}}</p>
                                         <p>Type : {{$booking->car_type}}</p>
+                                        <p>Rate : {{$booking->rate."/km"}}</p>
+                                        <p>Distance : {{$booking->distance}}</p>
+                                        <p>Fare : {{$booking->amount}}</p>
                                         <p>Passangers: {{$booking->passangers}}</p>
                                         <p>Status : {{$booking->status}}</p>
-
-
                                         </div>
 
                                     </div>
