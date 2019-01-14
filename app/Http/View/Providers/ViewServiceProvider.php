@@ -24,13 +24,13 @@ class ViewServiceProvider extends ServiceProvider
         );
 
         // Using Closure based composers...
-        View::composer('common.section_tarrif', function ($view) {
+        View::composer('front.common.section_tarrif', function ($view) {
             $tarrifs = Tarrif::paginate(4);
             $view->with('tarrifs', $tarrifs);
         });
 
         // Using Closure based composers...
-        View::composer('common.section_services', function ($view) {
+        View::composer('front.common.section_services', function ($view) {
             $services = Service::paginate(4);
             $view->with('services', $services);
         });

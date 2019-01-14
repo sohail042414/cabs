@@ -33,7 +33,7 @@ class PagesController extends Controller
     {
         $booking_status = request()->session()->get('booking_status', 'no');
 
-        return view('pages.get_taxi', ['booking_status' => $booking_status]);
+        return view('front.get_taxi', ['booking_status' => $booking_status]);
     }
     /**
      * Show the tarrif us page.
@@ -42,7 +42,7 @@ class PagesController extends Controller
      */
     public function tarrif()
     {
-        return view('pages.tarrif');
+        return view('front.tarrif');
     }
 
     /**
@@ -65,7 +65,7 @@ class PagesController extends Controller
     {
         $faqs = \App\Models\Faq::orderBy('sort_order')->get();
 
-        return view('pages.faqs', array('faqs' => $faqs));
+        return view('front.faqs', array('faqs' => $faqs));
     }
 
     /**
