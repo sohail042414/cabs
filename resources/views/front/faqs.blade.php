@@ -10,7 +10,6 @@
     </div>
   </section>
 
-
   <section class="tx-section">
         <div class="container">
             <div class="row">

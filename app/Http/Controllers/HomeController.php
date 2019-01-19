@@ -31,7 +31,7 @@ class HomeController extends Controller
 
         $booking_status = $request->session()->get('booking_status', 'no');
 
-        return view('pages.home', ['booking_status' => $booking_status]);
+        return view('front.home', ['booking_status' => $booking_status]);
     }
 
     /**
@@ -108,7 +108,7 @@ class HomeController extends Controller
 
         //Mail::to($booking->email)->send(new BookingConfirmation($booking));
 
-        return view('pages.confirmation', ['booking' => $booking]);
+        return view('front.confirmation', ['booking' => $booking]);
     }
 
     private function sendCustomerEmail(Booking $booking)

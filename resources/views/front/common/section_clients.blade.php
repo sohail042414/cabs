@@ -11,22 +11,22 @@
             <div class="row mt-3">
               <div class="col-6 col-sm-6 col-md-3">
                 <div class="cl-img">
-                  <img src="theme/img/partner-1.png" alt="img">
+                  <img src="/theme/img/partner-1.png" alt="img">
                 </div>
               </div>
               <div class="col-6 col-sm-6 col-md-3">
                 <div class="cl-img">
-                  <img src="theme/img/partner-2.png" alt="img">
+                  <img src="/theme/img/partner-2.png" alt="img">
                 </div>
               </div>
               <div class=" col-6 col-sm-6 col-md-3">
                 <div class="cl-img">
-                  <img src="theme/img/partner-3.png" alt="img">
+                  <img src="/theme/img/partner-3.png" alt="img">
                 </div>
               </div>
               <div class="col-6 col-sm-6 col-md-3">
                 <div class="cl-img">
-                  <img src="theme/img/partner-4.png" alt="img">
+                  <img src="/theme/img/partner-4.png" alt="img">
                 </div>
               </div>
             </div>

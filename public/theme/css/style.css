@@ -729,6 +729,24 @@ header.header .main-menu .submenu{
     background-color: rgba(255, 255, 255, 0.25);
 }
 
+.car-select-standard {
+    background: url(../img/icon-car-1.png) top center no-repeat
+}
+
+.car-select-business {
+    background: url(../img/icon-car-2.png) top center no-repeat
+}
+
+.car-select-vip{
+    background: url(../img/icon-car-3.png) top center no-repeat
+}
+
+.car-select-van {
+    background: url(../img/icon-car-4.png) top center no-repeat
+}
+
+
+/*
 .menu-icon-1 {
     background: url(../img/icon-car-1.png) top center no-repeat
 }
@@ -744,7 +762,7 @@ header.header .main-menu .submenu{
 .menu-icon-4 {
     background: url(../img/icon-car-4.png) top center no-repeat
 }
-
+*/
 
 /*-------------------------------------------
                 FORM BOX
@@ -868,7 +886,7 @@ header.header .main-menu .submenu{
 }
 
 .form-box .error-message{
-    font-size: 12px;
+    font-size: 15px;
     /* background: #1f1f1f30; */
     padding: 5px;
     width: 100%;

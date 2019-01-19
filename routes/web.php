@@ -17,9 +17,9 @@ Route::get('/', function () {
  */
 
 
-//Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
-Route::get('/', 'PagesController@get_taxi');
+//Route::get('/', 'PagesController@get_taxi');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
