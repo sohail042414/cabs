@@ -78,7 +78,7 @@ class PagesController extends Controller
     {
         $terms = \App\Models\Term::orderBy('sort_order')->get();
 
-        return view('pages.terms', array('terms' => $terms));
+        return view('front.terms', array('terms' => $terms));
     }
 
     /**

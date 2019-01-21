@@ -51,9 +51,11 @@
       @foreach ($services as $service)
         <div class="col-md-3">
           <div class="services-block">
-            <img src="theme/img/services-1.png" alt="services" />
-            <h3>RAPID CITY TRANSFER</h3>
-            <p>We will bring you quickly and comfortably to anywhere in your city</p>
+            <img src="/theme/img/{{$service->image}}" alt="services" />
+            <h3>{{$service->title}}</h3>
+            <p>
+            {{$service->short_description}}
+            </p>
           </div>
         </div>
         @endforeach

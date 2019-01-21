@@ -12,4 +12,5 @@
     </div>
   </section>
 @include('front.common.section_tarrif')
+@include('front.common.section_services')
 @endsection

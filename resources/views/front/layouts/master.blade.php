@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('theme/css/style.css') }}" />
    <!-- Resource jQuery -->
    <script src="{{ asset('theme/js/jquery-2.1.1.js') }}"></script>
+   <script src="{{ asset('theme/js/bootstrap.min.jss') }}"></script>
   <script src="{{ asset('theme/js/main.js') }}"></script> 
 </head>
 <body>
