@@ -56,6 +56,7 @@ return [
      */
 
     'from' => [
+        //'address' => env('MAIL_FROM_ADDRESS', 'uktaximanager@gmail.com'),
         'address' => env('MAIL_FROM_ADDRESS', 'uktaximanager@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'UK Airport Taxies'),
     ],

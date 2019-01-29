@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CarType;
 use App\Models\SimpleMail;
+use App\Mail\BookingConfirmed;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -104,6 +106,8 @@ class BookingController extends Controller
     {
         $booking = Booking::find($id);
 
+        $this->sendConfirmationEmail($booking);
+
         // echo "<pre>";
         // print_r($booking->getAttributes());
         // exit;
@@ -134,6 +138,12 @@ class BookingController extends Controller
 
     private function sendConfirmationEmail(Booking $booking)
     {
+
+        Mail::to($booking->email)->send(new BookingConfirmed($booking));
+
+
+        echo "After herere";
+        exit;
 
         $subject = "Booking Confirmed!!!!!!!!!!!!";
         $message = "Your Booking has been confirmed, you driver will be available at pickup location 20 minutes before said time!";
@@ -253,4 +263,33 @@ class BookingController extends Controller
     {
         //
     }
+
+    private function sendMangerEmail(Booking $booking)
+    {
+        $subject = "Booking Request Received (Tarr Ai Ae Faraz!!!!)";
+        $message = "You have received you request for taxi, Kindly review and assign a driver!";
+        $message .= "Booking Date/time :" . $booking->booking_date . "<br>";
+        $message .= "Pickup address :" . $booking->from_address . "<br>";;
+        $message .= "Drop off :" . $booking->to_address . "<br>";;
+        $message .= "Distance :" . $booking->distance . "<br>";;
+        $message .= "Type :" . $booking->car_type . "<br>";;
+        $message .= "Rate :" . $booking->rate . "<br>";;
+        $message .= "Fare :" . $booking->amount . "<br>";;
+        $message .= " <br> Your business is growing day by day, Thank You SOhail!!!!";
+
+        $status = SimpleMail::make()
+            ->setTo('naumankhan051@gmail.com', "Chawal Bossss")
+            ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
+            ->setSubject($subject)
+            ->setMessage($message)
+            ->setReplyTo('uktaximanager@gmail.com', 'Uk Taxi Manager')
+            ->setHtml()
+            ->setWrap(100)
+            ->send();
+        if (!$status) {
+            echo "Email not sent";
+            exit;
+        }
+    }
+
 }

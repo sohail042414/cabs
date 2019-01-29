@@ -8,11 +8,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Booking;
 
-class BookingConfirmation extends Mailable
+class BookingConfirmed extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $booking;
+
     /**
      * Create a new message instance.
      *
@@ -31,6 +31,8 @@ class BookingConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.booking_plain');
+        return $this->markdown('emails.booking_confirmed')->with([
+            'booking'=>$this->booking,
+        ]);
     }
 }
