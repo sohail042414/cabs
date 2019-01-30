@@ -11,7 +11,7 @@ class PagesController extends Controller
      */
     public function contact()
     {
-        return view('pages.contact');
+        return view('front.contact');
     }
 
     /**
@@ -21,7 +21,7 @@ class PagesController extends Controller
      */
     public function services()
     {
-        return view('pages.services');
+        return view('front.services');
     }
 
     /**

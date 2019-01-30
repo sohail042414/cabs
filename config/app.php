@@ -230,9 +230,11 @@ return [
     /* general settings temporary*/
     'settings' => [
         'phone' => '073-9582-3243',
-        'email' => 'infouktaxiservice@gmail.com',
+        'email' => 'taxiservice@gmail.com',
         'skype' => 'uk_cab',
-        'address' => '43 2-nd Avenue, London, 29004-7153 (Testing)',
+        'twitter' => '@uk_cab',
+        'pintrust' => '',
+        'address' => '43 2-nd Avenue, London, 29004-7153 ',
         'records_per_page' => 5,
     ],
 

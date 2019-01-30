@@ -152,6 +152,9 @@ class BookingController extends Controller
 
         $message .= " <br> Have nice Trip............!!!!";
 
+        $sent = mail($booking->email, $subject, $message);
+        
+        /*
         $status = SimpleMail::make()
             ->setTo($booking->email, "Customer")
             ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
@@ -165,6 +168,7 @@ class BookingController extends Controller
             echo "Email not sent";
             exit;
         }
+         */
     }
 
 

@@ -1,6 +1,6 @@
 @include('admin.common.errors')
 @php($method = ($action =='create') ? 'POST' : 'PUT')
-@php($action_url = ($action =='create') ? '/admin/terms' : '/admin/faqs/'.$term->id)
+@php($action_url = ($action =='create') ? '/admin/terms' : '/admin/terms/'.$term->id)
 
 
 <form method="POST" action="{{ $action_url }}">

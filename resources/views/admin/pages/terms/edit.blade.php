@@ -1,4 +1,4 @@
-s@extends('admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('content')
 <div class="container">
@@ -11,7 +11,7 @@ s@extends('admin.layouts.master')
                 <div class="card-header">Edit Term (Section).</div>
 
                 <div class="card-body">
-                    @include('admin.terms.terms.form')
+                    @include('admin.pages.terms.form')
                 </div>
             </div>
         </div>
