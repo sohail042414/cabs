@@ -15,14 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
  */
-
-
 Route::get('/', 'HomeController@index');
-
-//Route::get('/', 'PagesController@get_taxi');
-
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
+
+ //submit booking form
+Route::post('/make-booking', 'BookingController@make_booking');
+//display booking
+Route::get('/booking-detail/{booking_id}', 'BookingController@detail');
+Route::get('/booking-list', 'BookingController@list');
+//get request for logout. 
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/contact-us', 'PagesController@contact');
 Route::get('/about-us', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
@@ -35,23 +37,16 @@ Route::get('/questions-answers', 'PagesController@faqs');
 
 Route::get('/terms-conditions', 'PagesController@terms');
 
-//forms
-Route::post('/make-booking', 'HomeController@make_booking');
-//display booking
-Route::get('/confirmation/{booking_id}', 'HomeController@confirmation');
-
-
 /**
  * Admin routes
  */
 Route::resource('/admin/faqs', 'Admin\FaqController');
-
 Route::resource('/admin/bookings', 'Admin\BookingController');
 Route::get('/admin/bookings/confirm/{id}', 'Admin\BookingController@confirm');
 Route::resource('/admin/tarrifs', 'Admin\TarrifController');
 Route::resource('/admin/services', 'Admin\ServiceController');
 Route::resource('/admin/terms', 'Admin\TermsController');
-
+Route::resource('/admin/settings', 'Admin\SettingsController');
 
 Route::get('/admin', 'Admin\AdminController@index');
 

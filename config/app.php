@@ -236,6 +236,8 @@ return [
         'pintrust' => '',
         'address' => '43 2-nd Avenue, London, 29004-7153 ',
         'records_per_page' => 5,
+        'manager_email' => 'uktaximanager@gmail.com',
+        'extra_email' => 'naumankhan051@gmail.com'
     ],
 
 ];

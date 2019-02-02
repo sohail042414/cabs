@@ -8,23 +8,36 @@
       <div class="navbar-nav">
         <ul class="main-menu text-center">
             <li id="menu-item-42" class="menu-item current-menu-parent">
-                <a href="{{ url('/') }}/"><span>Home</span></a>
+                <a href="{{ url('/') }}"><span>Home</span></a>
             </li>
             <li id="menu-item-50" class="menu-item">
-                <a href="{{ url('/') }}/tarrif/"><span>Tarrif</span></a>
+                <a href="{{ url('/tarrif') }}"><span>Tarrif</span></a>
             </li>
             <li id="menu-item-50" class="menu-item">
-                <a href="{{ url('/') }}/get-taxi/"><span>Get Taxi</span></a>
+                <a href="{{ url('/get-taxi') }}"><span>Get Taxi</span></a>
             </li>
             <li id="menu-item-55" class="menu-item">
-                <a href="{{ url('/') }}/questions-answers/"><span>Q&A</span></a>
+                <a href="{{ url('/questions-answers') }}"><span>Q&A</span></a>
             </li>
             <li id="menu-item-59" class="menu-item">
-                <a href="{{ url('/') }}/terms-conditions/"><span>T&C</span></a>
+                <a href="{{ url('/terms-conditions') }}"><span>T&C</span></a>
             </li>
             <li id="menu-item-707" class="menu-item">
-                <a href="{{url('/')}}/contact-us"><span>Contact Us</span></a>
+                <a href="{{url('/contact-us')}}"><span>Contact Us</span></a>
             </li>
+            @guest
+            <li id="menu-item-707" class="menu-item">
+                <a href="{{url('/login')}}"><span>Login</span></a>
+            </li>
+            @else
+            <li>
+                <a class="sub" href="#">Account ({{ Auth::user()->name }})</a>
+                <ul class="submenu">
+                    <li><a href="{{url('/booking-list')}}">Bookings</a></li>                    
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                </ul>
+            </li>
+            @endguest
         </ul>
       </div>
     </div>

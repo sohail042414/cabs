@@ -9,7 +9,7 @@ use App\Models\SimpleMail;
 use Illuminate\Http\Request;
 use App\Mail\BookingConfirmation;
 
-class HomeController extends Controller
+class HomeController__ extends Controller
 {
     /**
      * Create a new controller instance.

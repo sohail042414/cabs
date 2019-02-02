@@ -1,7 +1,7 @@
 @include('admin.common.errors')
 @php($method = ($action =='create') ? 'POST' : 'PUT')
 @php($action_url = ($action =='create') ? '/admin/bookings' : '/admin/bookings/'.$booking->id)
-
+@php($modes = array('one_way'=>'One Way','two_way'=>'Two Way'))
 
 <form method="POST" action="{{ $action_url }}">
     {{ csrf_field() }}

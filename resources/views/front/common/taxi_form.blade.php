@@ -183,12 +183,14 @@
 
     $("#from_address").geocomplete({
         details: "#geo-from-wrap",
-        detailsAttribute: "data-geo-from"
+        detailsAttribute: "data-geo-from",
+        componentRestrictions : {'country': ['uk']}
     });
 
     $("#to_address").geocomplete({
         details: "#geo-to-wrap",
-        detailsAttribute: "data-geo-to"
+        detailsAttribute: "data-geo-to",
+        componentRestrictions : {'country': ['uk']}
     }).bind("geocode:result", function(event, result){
         set_fare_distance();
     });

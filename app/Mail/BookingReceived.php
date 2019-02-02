@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Booking;
 
-class BookingConfirmation extends Mailable
+class BookingReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,10 +18,9 @@ class BookingConfirmation extends Mailable
      *
      * @return void
      */
-    public function __construct(Booking $booking)
+    public function __construct($booking)
     {
         $this->booking = $booking;
-        //
     }
 
     /**
@@ -31,7 +30,8 @@ class BookingConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->from('booking@booking.com')
-            ->view('emails.booking_plain');
+        return $this->markdown('emails.bookings.received')->with([
+            'booking' => $this->booking,
+        ]);;
     }
 }
