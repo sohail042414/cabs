@@ -58,6 +58,14 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/drivers')}}">Drivers</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/customers')}}">Customers</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('/admin/settings')}}">Settings</a>
                         </li>
 

@@ -17,33 +17,62 @@
         <input type="hidden" name="form_page" value="get-taxi">
         </div>
 
-        <div class="row" id="geo-from-wrap">
-        <div class="col-md-12">
-            <div class="form-input icon location">                    
-            <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
-            <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="{{ old('from_lng') }}">
-            <input type="text" id="from_address" name="from_address" value="{{ old('from_address') }}"
-                aria-required="true" aria-invalid="false" placeholder="From Address...">
-            @if($errors->has('from_address'))
-            <span class="error-message">{{ $errors->first('from_address') }}</span>                   
-            @endif
-            
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="form-input icon arrowdown">                  
+                    <select name="type" class="form-select" id="booking-type" >
+                        <option @if(old('type') =='from_airport') selected="selected" @endif value="from_airport">From Airport</option>
+                        <option @if(old('type') =='to_airport') selected="selected" @endif value="to_airport">To Airport</option>
+                    </select>  
+                    @if($errors->has('type'))
+                    <span class="error-message">{{ $errors->first('type') }}</p>
+                    @endif                
+                </div>
             </div>
         </div>
+
+        <div class="row" style="display:none;" id="geo-from-wrap">
+            <div class="col-md-12">
+                <div class="form-input icon location">                    
+                <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
+                <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="{{ old('from_lng') }}">
+                <input type="text" id="from_address" name="from_address" value="{{ old('from_address') }}"
+                    aria-required="true" aria-invalid="false" placeholder="From ...">
+                @if($errors->has('from_address'))
+                <span class="error-message">{{ $errors->first('from_address') }}</span>                   
+                @endif                
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="airport-list">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="form-input icon arrowdown">                  
+                    <select name="airport_id" id="booking-airport" class="form-select" >
+                        <option  value="0">Select airport</option>     
+                        @foreach($airports as $airport)
+                        <option data-lat="{{$airport->lat}}" data-lng="{{$airport->lng}}"  value="{{$airport->id}}">{{$airport->name}}</option>                        
+                        @endforeach
+                    </select>  
+                    @if($errors->has('airport_id'))
+                    <span class="error-message">{{ $errors->first('airport_id') }}</p>
+                    @endif                
+                </div>
+            </div>
         </div>
 
         <div class="row" id="geo-to-wrap">
-        <div class="col-md-12">
-            <div class="form-input icon location">
-            <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="{{ old('to_lat')}}">
-            <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="{{ old('to_lng')}}">                  
-            <input id="to_address" type="text" name="to_address" value="{{ old('to_address') }}"
-                placeholder="To...">
-            @if($errors->has('to_address'))
-            <span class="error-message">{{ $errors->first('to_address') }}</span>                   
-            @endif
+            <div class="col-md-12">
+                <div class="form-input icon location">
+                <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="{{ old('to_lat')}}">
+                <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="{{ old('to_lng')}}">                  
+                <input id="to_address" type="text" name="to_address" value="{{ old('to_address') }}"
+                    placeholder="To...">
+                @if($errors->has('to_address'))
+                <span class="error-message">{{ $errors->first('to_address') }}</span>                   
+                @endif
+                </div>
             </div>
-        </div>
         </div>
 
         <div class="row">
@@ -55,6 +84,7 @@
             @endif
             </div>
         </div>
+        
         <div class="col-md-6">
             <div class="form-input icon calendar">
             <input type="text" value="{{ old('booking_date')}}" id="booking_date" name="booking_date" placeholder="Date">
@@ -63,12 +93,14 @@
             @endif    
             </div>
         </div>
+
         </div>
 
         <div class="row">
         <div class="col-md-8">
             <div class="form-input icon email">
-                <input type="text" name="email" value="{{ old('email')}}" placeholder="Email">
+            @php($default_email = isset(Auth::user()->email) ? Auth::user()->email:'')    
+            <input type="text" name="email" value="{{ old('email',$default_email)}}" placeholder="Email">
             @if($errors->has('email'))
                 <span class="error-message">{{ $errors->first('email') }}</p>
             @endif  
@@ -159,6 +191,7 @@
 
     }
 
+
     //$("#from_address").geocomplete();
     $(document).ready(function(){
         //$('#booking_date').datetimepicker();        
@@ -177,6 +210,43 @@
           el.parent().find('.type-value').val(el.attr('data-value'));
           set_fare_distance();
           return false;
+        });
+        /*
+        $('#booking-type').on('click',function(){
+            $('#airport-list').show();
+        });
+        */
+
+        $('#booking-type').on('change',function(){
+            //$('#airport-list').show();
+            var booking_type = $(this).val();
+            if(booking_type =='from_airport'){
+                $('#geo-to-wrap').show();
+                $('#geo-from-wrap').hide();
+            }else{
+                $('#geo-from-wrap').show();
+                $('#geo-to-wrap').hide();
+            }
+        });
+        //set lat/lng for address. 
+        $('#booking-airport').on("select change blur",function(){
+            //console.log($(this).val())
+            var airport_lat = $(this).find(':selected').attr('data-lat');
+            var airport_lng = $(this).find(':selected').attr('data-lat');
+            var airport_address = $(this).find(':selected').text();
+
+            var booking_type = $('#booking-type').val();
+            console.log(booking_type);
+            if(booking_type =='to_airport'){
+                $('#to_lat').val(airport_lat);
+                $('#to_lng').val(airport_lng);
+                $('#to_address').val(airport_address);
+            }else{
+                $('#from_lat').val(airport_lat);
+                $('#from_lng').val(airport_lng);
+                $('#from_address').val(airport_address);
+            }
+            set_fare_distance();
         });
         
     });

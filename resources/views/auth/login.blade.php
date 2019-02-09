@@ -32,7 +32,7 @@
             </div>            
             <div class="login-txt-block">
                 <button class="login-btn"> Login</button>
-                <a href="" class="forgot">Register</a>
+                <a href="/register" class="forgot">Register</a>
             </div>
         </form>
     </div>

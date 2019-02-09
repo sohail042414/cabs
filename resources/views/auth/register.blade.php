@@ -51,7 +51,7 @@
             
             <div class="login-txt-block">
                 <button class="login-btn"> Submit</button>
-                <a href="" class="forgot">Login Here</a>
+                <a href="/login" class="forgot">Login Here</a>
             </div>
         </form>
     </div>

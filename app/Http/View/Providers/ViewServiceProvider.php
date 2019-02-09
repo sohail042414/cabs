@@ -8,6 +8,7 @@ use App\Models\Term;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Airport;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -39,7 +40,13 @@ class ViewServiceProvider extends ServiceProvider
         // Using Closure based composers...
         View::composer('front.common.taxi_form', function ($view) {
             $tarrifs = Tarrif::paginate(4);
-            $view->with('tarrifs', $tarrifs);
+            $airports = Airport::paginate(20);
+            $view->with(
+                [
+                    'tarrifs' => $tarrifs,
+                    'airports' => $airports
+                ]
+            );
         });
 
         // Using Closure based composers...

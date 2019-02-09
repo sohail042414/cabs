@@ -15,7 +15,11 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->default(0);
+            $table->integer('driver_id')->default(0);
+            $table->integer('airport_id')->default(0);
             $table->string('car_type');
+            $table->enum('type', ['from_airport', 'to_airport'])->default('from_airport');
             $table->enum('mode', ['one_way', 'two_way'])->default('one_way');
             $table->enum('status', ['pending', 'confirmed', 'delayed', 'canceled', 'completed']);
             $table->string('from_address');

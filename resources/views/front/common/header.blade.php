@@ -33,7 +33,13 @@
             <li>
                 <a class="sub" href="#">Account ({{ Auth::user()->name }})</a>
                 <ul class="submenu">
-                    <li><a href="{{url('/booking-list')}}">Bookings</a></li>                    
+                    @if(Auth::user()->type == 'customer')
+                    <li><a href="{{url('/booking-list')}}">Bookings</a></li>
+                    @elseif(Auth::user()->type == 'driver')                    
+                    <li><a href="{{url('/driver/booking-list')}}">Bookings</a></li>
+                    @elseif(Auth::user()->type == 'admin')
+                    <li><a href="{{url('/admin')}}">Admin Panel</a></li>       
+                    @endif
                     <li><a href="{{ route('logout') }}">Logout</a></li>
                 </ul>
             </li>
