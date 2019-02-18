@@ -131,8 +131,16 @@ class FaqController extends Controller
      * @param \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faq $faq)
+    public function destroy($id, Request $request)
     {
-        //
+        $faq = Faq::find($id);
+
+        if (is_object($faq)) {
+            $faq->delete();
+            $request->session()->flash('status_success', 'FAQ deleted!');
+        } else {
+            $request->session()->flash('status_error', 'FAQ does not exist!');
+        }
+        return redirect('/admin/faqs/');
     }
 }

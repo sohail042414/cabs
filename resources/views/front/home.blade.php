@@ -6,7 +6,7 @@
 
 <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
 <link href="{{ asset('jquery-ui/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
-@include('front.geocode')
+@include('geocode')
 
 <ul class="cb-slideshow">
     <li><span>Image 01</span><div></div></li>
@@ -30,7 +30,7 @@
 </div>
 </div>
 </section>
-@include('front.common.contact_info')
+@include('front.common.section_info')
 @include('front.common.section_tarrif')
 @include('front.common.section_clients')
 @endsection

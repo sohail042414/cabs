@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\BookingConirmation;
 use App\Models\Booking;
 use App\Models\SimpleMail;
 use Illuminate\Http\Request;
 use App\Mail\BookingConfirmation;
+
 
 class CustomerController extends Controller
 {
@@ -33,8 +35,12 @@ class CustomerController extends Controller
 
     public function list()
     {
-        $per_page = config('app.settings.records_per_page');
-        $list = Booking::paginate($per_page);
+        $per_page = config('settings.records_per_page');
+
+        $list = Booking::where('user_id', Auth::user()->id)
+            ->orWhere('email', Auth::user()->email)
+            ->paginate($per_page);
+
         return view('front.booking_list', ['list' => $list]);
     }
 

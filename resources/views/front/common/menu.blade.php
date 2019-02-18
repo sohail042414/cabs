@@ -14,9 +14,23 @@
         </li>
         <li id="menu-item-59" class="menu-item">
             <a href="{{ url('/') }}/terms-conditions/"><span>T&C</span></a>
-        </li>
+        </li>        
         <li id="menu-item-707" class="menu-item">
             <a href="{{url('/')}}/contact-us"><span>Contact Us</span></a>
         </li>
+        @guest
+            <li id="menu-item-707" class="menu-item">
+                <a href="{{url('/login')}}"><span>Login</span></a>
+            </li>
+            @else
+                @if(Auth::user()->type == 'customer')
+                <li class="menu-item"><a href="{{url('/booking-list')}}">My Bookings</a></li>
+                @elseif(Auth::user()->type == 'driver')                    
+                <li class="menu-item"><a href="{{url('/driver/booking-list')}}">My Bookings</a></li>
+                @elseif(Auth::user()->type == 'admin')
+                <li class="menu-item"><a href="{{url('/admin')}}">Admin Panel</a></li>       
+                @endif
+                <li class="menu-item"><a href="{{ route('logout') }}">Logout</a></li>
+            @endguest
     </ul>
   </nav>

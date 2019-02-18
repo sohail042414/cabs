@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema; //Import Schema
+use Illuminate\Support\Facades\Config;
+use App\Models\Setting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        //Load dynamic settings
+        if (Schema::hasTable('settings')) {
+            foreach (Setting::all() as $setting) {
+                Config::set('settings.' . $setting->key, $setting->value);
+            }
+        }
     }
 
     /**

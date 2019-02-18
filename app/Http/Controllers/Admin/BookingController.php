@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CarType;
 use App\Models\SimpleMail;
+use App\Models\Cab;
 
 class BookingController extends Controller
 {
@@ -104,23 +105,81 @@ class BookingController extends Controller
     {
         $booking = Booking::find($id);
 
-        // echo "<pre>";
-        // print_r($booking->getAttributes());
-        // exit;
+        //$cab = $booking->cab;
+
+        //$free_cabs = Cab::where('status', 'free')->get();
+
         return view(
             'admin.pages.bookings.show',
             array(
-                'booking' => $booking
+                'booking' => $booking,
+                //'free_cabs' => $free_cabs
             )
         );
         //
     }
 
-    public function confirm(Request $request, $id)
+    /**
+     * Shows assign cab to booking screen. 
+     */
+
+    public function assign($id, Request $request)
     {
+
         $booking = Booking::find($id);
 
-        $booking->status = 'confirmed';
+        $cabs = Cab::where('status', 'free')->get();
+            //->where('type', $booking->car_type)
+        /*
+        if (count($cabs) == 0) {
+            $request->session()->flash('status_error', 'There are not free cabs, All booked!');
+        }
+         */
+        // $car_types = CarType::all();
+
+        // $status_list = $booking->statusList();
+
+        // $modes = $booking->modeList();
+
+        return view(
+            'admin.pages.bookings.assign',
+            array(
+                'booking' => $booking,
+                'cabs' => $cabs,
+            )
+        );
+    }
+
+    /**
+     * Confirm assignment. 
+     */
+
+    public function confirm(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'cab_id' => 'required',
+        ]);
+
+        $booking = Booking::find($id);
+
+        if (!is_object($booking) || $booking->status == 'pending') {
+            $booking->status = 'confirmed';
+        }
+
+        $cab = Cab::find($request->input('cab_id'));
+
+        if (!is_object($cab)) {
+            $request->session()->flash('status_error', 'No cab available, all booked!');
+            return redirect('/admin/bookings/' . $id);
+        }
+
+        $cab->status = 'booked';
+        $cab->save();
+
+        $booking->cab_id = $cab->id;
+        $booking->driver_id = $cab->driver_id;
+
         if ($booking->save()) {
             $this->sendConfirmationEmail($booking);
             $request->session()->flash('status_success', 'Booking confirmed!');
@@ -253,8 +312,16 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $booking = Booking::find($id);
+
+        if (is_object($booking)) {
+            $booking->delete();
+            $request->session()->flash('status_success', 'Booking deleted!');
+        } else {
+            $request->session()->flash('status_error', 'Booking does not exist!');
+        }
+        return redirect('/admin/bookings/');
     }
 }

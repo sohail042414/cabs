@@ -1,46 +1,100 @@
 @extends('front.layouts.master')
 @section('content')
-<style>
-    .booking-confirmation{
-        background: #FFC61A !important;
-        -webkit-border-radius: 8px;
-        -webkit-background-clip: padding-box;
-        -moz-border-radius: 8px;
-        -moz-background-clip: padding;
-        border-radius: 8px;
-        background-clip: padding-box;
-        max-width: 570px;
-        min-height: 200px;
-        margin: 20px auto !important;
-        padding: 45px 35px 10px !important;
-    }
-</style>
-
 <section class="page-header">
     <div class="container">
-      <ul class="breadcrumbs">
-      <li class="home">
-          <a href="/">{{ config('app.name', 'UK Airport Cabs') }}</a>
-        </li>
-        <li class="current">
-          // Booking Details
-        </li>
-      </ul>
-      <h1>Booking Details</h1>
+        <ul class="breadcrumbs">
+            <li class="home">
+            <a href="/">{{ config('app.name', 'UK Airport Cabs') }}</a>
+            </li>
+            <li class="current">
+            // Booking Detail
+            </li>
+        </ul>
+    <h1>Booking Detail</h1>
     </div>
   </section>
 
-<div class="booking-confirmation">
-    <p>Booking date : {{$booking->booking_date}}</p>
-    <p>From : {{$booking->from_address}}</p>
-    <p>To : {{$booking->to_address}}</p>
-    <p>Type : {{$booking->car_type}}</p>
-    <p>Rate : {{$booking->rate."/km"}}</p>
-    <p>Distance : {{$booking->distance}}</p>
-    <p>Fare : {{$booking->amount}}</p>
-    <p>Passangers: {{$booking->passangers}}</p>
-    <p>Status : {{$booking->status}}</p>
-</div>
+   @php ($detail_css_class = ($booking->status == 'pending')? 'col-md-8 col-lg-8 offset-lg-2 offset-md-2 col-sm-12':'col-md-6 col-lg-6 col-sm-12')
 
-@include('front.common.section_tarrif')
+  <section class="tx-section">
+        <div class="container">
+            <div class="row">
+                <div class="{{$detail_css_class}}">
+
+                   <div class="bookings-wrap">
+                      <div class="table-responsive">
+                          <table class="table color-table primary-table">
+                              <thead>
+                                  <tr>
+                                      <th colspan="2">Bookig </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($booking->showBookingFields() as $field => $title)
+                                  <tr>
+                                      <td>{{$title}}</td>
+                                      <td>{{ $booking->{$field} }}</td>
+                                  </tr>   
+                                @endforeach
+                              </tbody>
+                          </table>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                @if(is_object($booking->cab))
+                    <div class="bookings-wrap">
+                        
+                        <div class="table-responsive">
+                            <table class="table color-table primary-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Cab Details </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($booking->showCabFields() as $field => $title)
+                                    <tr>
+                                        <td>{{$title}}</td>
+                                        <td>{{ $booking->cab->{$field} }}</td>
+                                    </tr>   
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                        @endif
+
+                        @if(is_object($booking->driver))
+                        <div class="table-responsive" style="margin-top:10px;">
+                            <table class="table color-table primary-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Driver Details </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($booking->showDriverFields() as $field => $title)
+                                    <tr>
+                                        <td>{{$title}}</td>
+                                        <td>{{ $booking->driver->{$field} }}</td>
+                                    </tr>   
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>                       
+                    </div>
+                    @endif
+                </div>
+            </div> 
+            @if($booking->status =='pending')
+            <div class="row" style="margin-top:20px; display:none;">
+                <div class="col-md-4 col-lg-4 offset-md-4 offset-lg-4 col-sm-12">
+                  <button onclick='location.href="{{ url('/cancel-booking'.$booking->id) }}"' class="tx-btn btn btn-lg m-0 pull-right">Cancel booking</button>
+                </div>
+            </div>
+            @endif
+        </div>
+    </section>
 @endsection

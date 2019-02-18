@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Admin : UK Airport Cabs') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <script src="{{ asset('theme/js/jquery-2.1.1.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -42,6 +43,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/cabs')}}">Cabs</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('/admin/faqs')}}">FAQs</a>
                         </li>
 
@@ -63,6 +68,10 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/admin/customers')}}">Customers</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin/airports')}}">Airports</a>
                         </li>
 
                         <li class="nav-item">

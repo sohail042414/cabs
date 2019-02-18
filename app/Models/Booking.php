@@ -27,6 +27,17 @@ class Booking extends BaseModel
         );
     }
 
+    public function cab()
+    {
+        return $this->belongsTo('App\Models\Cab');
+    }
+
+
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Driver');
+    }
+
     public function getDistance()
     {
         return $this->distanceMiles();
@@ -76,6 +87,41 @@ class Booking extends BaseModel
         }
     }
 
+
+    public function showBookingFields()
+    {
+        return array(
+            'id' => 'Booking Id',
+            'car_type' => 'Car Type',
+            'from_address' => 'From',
+            'to_address' => 'To',
+            'distance' => 'Distance',
+            'rate' => 'Rate',
+            'amount' => 'Amount',
+            'mode' => 'Mode',
+            'status' => 'Status'
+        );
+    }
+
+    public function showCabFields()
+    {
+        return array(
+            'type' => 'Type',
+            'name' => 'Name',
+            'model' => 'Model',
+            'reg_number' => 'Registration Number',
+            'brand' => 'Brand',
+        );
+    }
+
+
+    public function showDriverFields()
+    {
+        return array(
+            'name' => 'Driver Name',
+            'email' => 'Driver Email',
+        );
+    }
 
 
 }

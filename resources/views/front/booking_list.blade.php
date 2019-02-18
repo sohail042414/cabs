@@ -2,15 +2,15 @@
 @section('content')
 <section class="page-header">
     <div class="container">
-      <ul class="breadcrumbs">
-      <li class="home">
-          <a href="/">{{ config('app.name', 'UK Airport Cabs') }}</a>
-        </li>
-        <li class="current">
-          // Bookings
-        </li>
-      </ul>
-      <h1>Bookings</h1>
+        <ul class="breadcrumbs">
+            <li class="home">
+            <a href="/">{{ config('app.name', 'UK Airport Cabs') }}</a>
+            </li>
+            <li class="current">
+            // Bookings
+            </li>
+        </ul>
+    <h1>Bookings</h1>
     </div>
   </section>
 
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                  <button onclick='location.href="{{ url('/get-taxi') }}"' class="tx-btn btn btn-lg m-0 pull-right">Create bookings</button>
+                  <button onclick='location.href="{{ url('/get-taxi') }}"' class="tx-btn btn btn-lg m-0 pull-right">Make booking</button>
                 </div>
             </div>
 
@@ -41,8 +41,9 @@
                                       <th>Car Type</th>
                                       <th>Date</th>
                                       <th>Status</th>
-                                      <th>Actions</th>
-                                  </tr>
+                                      <th style="display:none;">Actions</th>
+                                      <th></th>
+                                    </tr>
                               </thead>
                               <tbody>
                               @foreach ($list as $booking)
@@ -53,10 +54,15 @@
                                       <td>{{$booking->car_type}}</td>
                                       <td>{{$booking->booking_date}}</td>
                                       <td>
-                                        <span class="label-bookings label-success">Confirmed</span>
-                                      </td>
+                                        @if($booking->status =='confirmed')
+                                            <span class="label-bookings label-success">Confirmed</span>
+                                        @endif
+                                        @if($booking->status =='pending')
+                                            <span class="label-bookings label-pending">Pending</span>
+                                        @endif
+                                        </td>
                                       <td>
-                                        <button class="btn-sml">X</button>
+                                        <a href="{{url('/booking-detail/'.$booking->id)}}" class="tx-btn-small">Details</a>
                                       </td>
                                   </tr>
                                 @endforeach
@@ -67,5 +73,5 @@
                 </div>
             </div>
         </div>
-  </section>
+    </section>
 @endsection

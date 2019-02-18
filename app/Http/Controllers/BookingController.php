@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\BookingConirmation;
 use App\Models\Booking;
 use App\Models\SimpleMail;
@@ -32,23 +33,51 @@ class BookingController extends Controller
 
         $redirect_page = $request->input('form_page');
 
+        $type = $request->input('type');
+
+        if (empty($type)) {
+            $type = 'standard';
+        }
+
+        $rules = [
+            'car_type' => 'required',
+            'phone' => 'required|min:9|max:14',
+            'email' => 'required|email',
+            'passangers' => 'required|numeric',
+            'booking_date' => 'required|date',
+        ];
+
+        if ($type == 'standard') {
+            $rules['from_address'] = 'required';
+            $rules['to_address'] = 'required';
+        } else {
+            $rules['airport_id'] = 'required';
+        }
+
+        if ($type == 'from_airport') {
+            $rules['to_address'] = 'required';
+        }
+
+        if ($type == 'to_airport') {
+            $rules['from_address'] = 'required';
+        }
+
         $this->validate(
             $request,
-            [
-                'from_address' => 'required',
-                'to_address' => 'required',
-                'car_type' => 'required',
-                'phone' => 'required|min:11|max:14',
-                'email' => 'required|email',
-                'passangers' => 'required|numeric',
-                'booking_date' => 'required|date',
-            ],
+            $rules,
             [
                 'required' => 'Provide :attribute',
                 'email.required' => 'Provide :attribute!',
                 'date' => 'Invalid date/time!',
+                'airport_id.required' => 'Select Airport.',
             ]
         );
+
+        $user_id = Auth::check() ? Auth::id() : 0;
+        $booking->user_id = $user_id;
+
+        $airport_id = $request->input('airport_id');
+        $booking->airport_id = !empty($airport_id) ? $airport_id : 0;
 
         $booking->from_address = $request->input('from_address');
         $booking->to_address = $request->input('to_address');
@@ -77,8 +106,7 @@ class BookingController extends Controller
         //$this->sendEmails($booking);
             $this->sendCustomerEmail($booking);
             $this->sendMangerEmail($booking);
-
-            //$request->session()->flash('booking_status', 'Your order booked, we will confirm it soon and contact you!');
+            $request->session()->flash('booking_status', 'Your order booked, we will confirm it soon and contact you!');
             return redirect('/booking-detail/' . $booking->id);
         } else {
             $request->session()->flash('booking_status', 'Booking not saved, please try again!');

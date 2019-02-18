@@ -15,7 +15,7 @@
             </div>
             <h4>{{$tarrif->title}}</h4>
             <p>{{$tarrif->desription}}</p>
-            <div class="price">${{$tarrif->rate}} <span>/km</span> </div>
+            <div class="price">{{ config('app.settings.currency_symbol') }}{{$tarrif->rate}} <span>/km</span> </div>
           </div>
         </div>
         @endforeach

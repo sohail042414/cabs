@@ -10,7 +10,7 @@
             <a href="/contact-us">// Contact Us</a>
         </li>
         </ul>
-        <h1>Services</h1>
+        <h1>Contact Us</h1>
     </div>
 </section>
 
@@ -21,13 +21,13 @@
                 <div class="tx-heading">
                     <h4>OPENING HOURS</h4>
                     <h2>24/7</h2>
-                    <p>Nam eu mi eget velit vulputate tempor gravida quis massa. In malesuada condimentum ultrices. Sed et mauris a purus fermentum elementum. Sed tristique semper enim, et gravida orci iaculis et. Nulla facilisi.</p>
+                    <p>If you have a query relating to your booking, account, or need support then submit an enquiry below. A member of the Customer Service team will investigate and get back to you as soon as possible. For security purposes please do not enter any credit card information into the boxes below..</p>
                 </div>
 
                 <ul class="social-icons-list dark">									
-                    <li><a href="#"><span class="fa fa-phone"></span>800-5-800</a></li>
-                    <li><a href="#"><span class="fa fa-envelope"></span>gettaxi@taxipark.co.uk</a></li>
-                    <li><a href="#"><span class="fa fa-skype"></span>gettaxipark</a></li>
+                    <li><a href="#"><span class="fa fa-phone"></span>{{ config('settings.phone') }}</a></li>
+                    <li><a href="#"><span class="fa fa-envelope"></span>{{ config('settings.address') }}</a></li>
+                    <li><a href="#"><span class="fa fa-skype"></span>{{ config('settings.skype') }}</a></li>
                     </ul>
                     <ul class="social-small">
                         <li><a href="#" class="fa fa-twitter"></a></li>
@@ -46,24 +46,51 @@
                 </div>
                 
                 <div class="contactus-form">
-                    <div class="text-box">
-                        <label>Name *</label>
-                        <input type="text" />
-                    </div>
-                    <div class="text-box">
-                        <label>Email *</label>
-                        <input type="text" />
+                    <form id="contact-us-form" method="POST" action="/submit-contact-us">
+                    
+                    @if(Session::has('success_message'))
+                    <p class="success-message">{{ Session::get('success_message') }}</p>
+                    @endif
+              
+                    @if(Session::has('error_message'))
+                    <p class="error-message">{{ Session::get('error_message') }}</p>
+                    @endif
+
+                    {{ csrf_field() }}
+                        <div class="text-box">
+                            <label>Name *</label>
+                            <input type="text" name="contact_name" value="{{ old('contact_name') }}" />
+                            @if($errors->has('contact_name'))
+                            <span class="error-message">{{ $errors->first('contact_name') }}</p>
+                            @endif    
                         </div>
                         <div class="text-box">
-                            <label>Message *</label>
-                            <textarea></textarea>
+                            <label>Email *</label>
+                            <input type="text" value="{{ old('contact_email') }}" name="contact_email" placeholder="john@example.com" />
+                            @if($errors->has('contact_email'))
+                            <span class="error-message">{{ $errors->first('contact_email') }}</p>
+                            @endif 
                         </div>
-                        <div class="btn-wrap align-left">
-                            <a href="" class="tx-btn btn btn-lg align-left">Get Taxi</a>
-                    </div>
+                            <div class="text-box">
+                                <label>Message *</label>
+                                <textarea name="contact_message">{{ old('contact_message') }}</textarea>
+                                @if($errors->has('contact_message'))
+                                <span class="error-message">{{ $errors->first('contact_message') }}</p>
+                                @endif 
+                            </div>
+                            <div class="btn-wrap align-left">
+                                <a href="javascript:void()" onclick="submit_contact_form();" class="tx-btn btn btn-lg align-left">Send</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
 @endsection
+
+<script type="text/javascript">
+    function submit_contact_form(){
+        $('#contact-us-form').submit();
+    }
+</script>

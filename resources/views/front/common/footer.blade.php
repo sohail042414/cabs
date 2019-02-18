@@ -31,13 +31,13 @@
           <div class="col-md-3">
             <h3 class="ft-label">ABOUT US</h3>
             <p class="ft-txt">
-              <b>Address:</b> {{ config('app.settings.address', 'MAIN-ND AVENUE, MAIN City, 29004') }}
+              <b>Address:</b> {{ config('settings.address', 'MAIN-ND AVENUE, MAIN City, 29004') }}
             </p>
 
             <ul class="social-icons-list">
-              <li><a href="javascript:void();"><span class="fa fa-phone"></span>{{ config('app.settings.phone', '0800-1-212') }}</a></li>
-              <li><a href="javascript:void();"><span class="fa fa-envelope"></span>{{ config('app.settings.email', 'taxiservice@gmail.com') }}</a></li>
-              <li><a href="javascript:void();"><span class="fa fa-skype"></span>{{ config('app.settings.skype', 'getaiporttaxi') }}</a></li>
+              <li><a href="javascript:void();"><span class="fa fa-phone"></span>{{ config('settings.phone', '0800-1-212') }}</a></li>
+              <li><a href="javascript:void();"><span class="fa fa-envelope"></span>{{ config('settings.email', 'taxiservice@gmail.com') }}</a></li>
+              <li><a href="javascript:void();"><span class="fa fa-skype"></span>{{ config('settings.skype', 'getaiporttaxi') }}</a></li>
             </ul>
           </div>
         </div>

@@ -6,7 +6,7 @@
 
 <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
 <link href="{{ asset('jquery-ui/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
-@include('front.geocode')
+@include('geocode')
 
 
 <section class="page-header">
@@ -22,7 +22,7 @@
 <section class="tx-section">
     <div class="container">
       <div class="tx-heading center">
-        <h4>OUR OPERATORS ARE WAITING FOR YOUR CALL:</h4>
+        <h4>OUR OPERATORS ARE WAITING FOR YOUR CALL</h4>
         <h2>{{ config('app.settings.phone', '') }}</h2>
       </div>
 

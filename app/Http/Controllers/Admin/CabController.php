@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cab;
 use App\Models\CarType;
-use App\Models\Tarrif;
+use App\Models\Driver;
 
-class TarrifController extends Controller
+class CabController extends Controller
 {
 
     public function __construct()
@@ -22,8 +23,8 @@ class TarrifController extends Controller
     public function index()
     {
         $per_page = config('settings.records_per_page');
-        $list = CarType::paginate($per_page);
-        return view('admin.pages.tarrifs.list', ['list' => $list]);
+        $list = Cab::paginate($per_page);
+        return view('admin.pages.cabs.list', ['list' => $list]);
     }
 
     /**
@@ -33,15 +34,19 @@ class TarrifController extends Controller
      */
     public function create()
     {
-        $car_type = new Tarrif();
-
+        $car_type = new CarType();
+        $cab = new Cab();
         $type_list = $car_type->typeList();
+        $status_list = $cab->statusList();
+        $drivers_list = Driver::all();
 
         return view(
-            'admin.pages.tarrifs.create',
+            'admin.pages.cabs.create',
             array(
-                'car_type' => $car_type,
+                'cab' => $cab,
                 'type_list' => $type_list,
+                'status_list' => $status_list,
+                'drivers_list' => $drivers_list,
                 'action' => 'create'
             )
         );
@@ -59,25 +64,28 @@ class TarrifController extends Controller
         //
         $this->validate($request, [
             'type' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'rate' => 'required|numeric'
+            'driver_id' => 'required',
+            'status' => 'required',
+            'name' => 'required',
+            'reg_number' => 'required'
         ]);
 
-        $car_type = new CarType();
-        $car_type->type = $request->input('type');
-        $car_type->title = $request->input('title');
-        $car_type->description = $request->input('description');
-        $car_type->rate = $request->input('rate');
-        $car_type->image = 'no-image.jpg';
+        $cab = new Cab();
+        $cab->type = $request->input('type');
+        $cab->driver_id = $request->input('driver_id');
+        $cab->status = $request->input('status');
+        $cab->reg_number = $request->input('reg_number');
+        $cab->name = $request->input('name');
+        $cab->model = $request->input('model');
+        $cab->brand = $request->input('brand');
 
-        if ($car_type->save()) {
+        if ($cab->save()) {
             $request->session()->flash('status_success', 'Car type (tarrif) created successfully!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/tarrifs');
+        return redirect('/admin/cabs');
     }
 
     /**
@@ -97,15 +105,20 @@ class TarrifController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tarrif $tarrif)
+    public function edit(Cab $cab)
     {
-        $type_list = $tarrif->typeList();
+        $car_type = new CarType();
+        $type_list = $car_type->typeList();
+        $status_list = $cab->statusList();
+        $drivers_list = Driver::all();
 
         return view(
-            'admin.pages.tarrifs.edit',
+            'admin.pages.cabs.edit',
             array(
-                'car_type' => $tarrif,
+                'cab' => $cab,
                 'type_list' => $type_list,
+                'status_list' => $status_list,
+                'drivers_list' => $drivers_list,
                 'action' => 'edit'
             )
         );
@@ -119,29 +132,32 @@ class TarrifController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tarrif $tarrif)
+    public function update(Request $request, Cab $cab)
     {
         //
         $this->validate($request, [
             'type' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'rate' => 'required|numeric'
+            'driver_id' => 'required',
+            'status' => 'required',
+            'name' => 'required',
+            'reg_number' => 'required'
         ]);
 
-        $car_type = $tarrif;
-        $car_type->type = $request->input('type');
-        $car_type->title = $request->input('title');
-        $car_type->description = $request->input('description');
-        $car_type->rate = $request->input('rate');
+        $cab->type = $request->input('type');
+        $cab->driver_id = $request->input('driver_id');
+        $cab->status = $request->input('status');
+        $cab->reg_number = $request->input('reg_number');
+        $cab->name = $request->input('name');
+        $cab->model = $request->input('model');
+        $cab->brand = $request->input('brand');
 
-        if ($car_type->save()) {
-            $request->session()->flash('status_success', 'Tarrif (car_type) update successfully!');
+        if ($cab->save()) {
+            $request->session()->flash('status_success', 'Cab (car_type) update successfully!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/tarrifs');
+        return redirect('/admin/cabs');
     }
 
     /**

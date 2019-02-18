@@ -4,35 +4,35 @@
 
 <div class="row">
     <div class="col-md-2 col-lg-2">
-        @include('admin.pages.faqs.sidebar')
+        @include('admin.pages.airports.sidebar')
     </div>
     <div class="col-md-10 col-lg-10">
         <div class="card">
-            <div class="card-header">Frequently Asked Questions (FAQs)</div>
+            <div class="card-header">Airports</div>
             <div class="-body">
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Sort Order</th>
-                            <th scope="col">Question</th>
-                            <th scope="col">Answer</th>
-                            <th scope="col" colspan="2">Actions</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                            <th colspan="2" scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($list as $faq)
+                        @foreach ($list as $airport)
                         <tr>
-                            <td>{{$faq->id}}</td>
-                            <td>{{$faq->sort_order}}</td>
-                            <td>{{$faq->question}}</td>
-                            <td>{{$faq->answer}}</td>
+                            <td>{{$airport->id}}</td>
+                            <td>{{$airport->name}}</td>
+                            <td>{{$airport->lat}}</td>
+                            <td>{{$airport->lng}}</td>
                             <td>
-                                <a class="btn btn-primary" href="/admin/faqs/{{$faq->id}}/edit/">Edit</a>
+                                <a class="btn btn-primary" href="/admin/airports/{{$airport->id}}/edit/">Edit</a>
                             </td>
                             <td>
-                                <a class="btn btn-danger" href="/admin/faqs/delete/{{$faq->id}}">Delete</a>
+                                <a class="btn btn-danger" href="/admin/airports/delete/{{$airport->id}}">Delete</a>
                             </td>
                         </tr>
                         @endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\BookingConirmation;
 use App\Models\Booking;
 use App\Models\SimpleMail;
@@ -34,7 +35,7 @@ class DriverController extends Controller
     public function list()
     {
         $per_page = config('app.settings.records_per_page');
-        $list = Booking::paginate($per_page);
+        $list = Booking::where('driver_id', Auth::user()->id)->paginate($per_page);
         return view('front.booking_list', ['list' => $list]);
     }
 

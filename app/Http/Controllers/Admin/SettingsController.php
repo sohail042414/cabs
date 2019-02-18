@@ -56,7 +56,7 @@ class SettingsController extends Controller
 
         $setting = new Setting();
         $setting->title = $request->input('title');
-        $setting->key = trim($request->input('text'));
+        $setting->key = trim($request->input('key'));
         $setting->value = trim($request->input('value'));
         if ($setting->save()) {
             $request->session()->flash('status_success', 'Setting created successfully!');

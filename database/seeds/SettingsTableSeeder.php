@@ -71,6 +71,11 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'front_records_per_page',
                 'value' => '10',
             ),
+            array(
+                'currency_symbol' => 'Currency symbol ',
+                'key' => 'currency_symbol',
+                'value' => '£',
+            ),
         );
 
         DB::table('settings')->insert($data);

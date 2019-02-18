@@ -21,6 +21,7 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
                 <div class="form-input icon arrowdown">                  
                     <select name="type" class="form-select" id="booking-type" >
+                        <option @if(old('type') =='standard') selected="selected" @endif value="standard">Standard</option>
                         <option @if(old('type') =='from_airport') selected="selected" @endif value="from_airport">From Airport</option>
                         <option @if(old('type') =='to_airport') selected="selected" @endif value="to_airport">To Airport</option>
                     </select>  
@@ -31,7 +32,7 @@
             </div>
         </div>
 
-        <div class="row" style="display:none;" id="geo-from-wrap">
+        <div class="row" style="" id="geo-from-wrap">
             <div class="col-md-12">
                 <div class="form-input icon location">                    
                 <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
@@ -45,13 +46,13 @@
             </div>
         </div>
 
-        <div class="row" id="airport-list">
+        <div class="row" id="airport-list" style="display:none;">
             <div class="col-md-12 col-lg-12 col-sm-12">
                 <div class="form-input icon arrowdown">                  
                     <select name="airport_id" id="booking-airport" class="form-select" >
-                        <option  value="0">Select airport</option>     
+                        <option  value="">Select airport</option>     
                         @foreach($airports as $airport)
-                        <option data-lat="{{$airport->lat}}" data-lng="{{$airport->lng}}"  value="{{$airport->id}}">{{$airport->name}}</option>                        
+                        <option @if(old('airport_id') == $airport->id) selected="selected" @endif  data-lat="{{$airport->lat}}" data-lng="{{$airport->lng}}"  value="{{$airport->id}}">{{$airport->name}}</option>                        
                         @endforeach
                     </select>  
                     @if($errors->has('airport_id'))
@@ -108,7 +109,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-input icon arrowdown">                  
-                <select name="mode" class="form-select" >
+                <select name="mode" class="form-select" id="booking-mode" >
                     <option @if(old('mode') =='one_way') selected="selected" @endif value="one_way">One Way</option>
                     <option @if(old('mode') =='two_way') selected="selected" @endif value="two_way">Two Way</option>
                 </select>  
@@ -137,7 +138,7 @@
                 <div class="form-input">
                 <label>
                 <input name="terminal_pickup" id="terminal_pickup" class="checkbox-inp" style="display:none" type="checkbox" value="1">                        
-                <span class="checkbox icon check">Pickup from terminal ($5)</span>
+                <span class="checkbox icon check">Pickup from terminal ({{ config('settings.currency_symbol') }}5)</span>
                 </label>
             </div>                  
         </div>
@@ -158,12 +159,14 @@
 </form>
 
 <script type="text/javascript">
+    var currency_symbol = '{{ config('settings.currency_symbol') }}';
     function set_fare_distance(){
         var rate = $('#'+$('#car_type').val()).attr('data-rate');        
         var from_lat = $('#from_lat').val();
         var from_lng = $('#from_lng').val();
         var to_lat = $('#to_lat').val();
         var to_lng = $('#to_lng').val();
+        var trip_type = $('#booking-mode').val();
 
         //console.log('from_lat:'+from_lat+' || from_lng:'+from_lng+' || to_lat:'+to_lat+' || to_lng:'+to_lng);
 
@@ -173,16 +176,20 @@
             $('#distance').val(distance);
             var fare_total = rate*distance;
             fare_total = parseFloat(Math.round(fare_total * 100) / 100).toFixed(2);
-                        
+
+            if(trip_type == 'two_way'){
+                fare_total = fare_total*2;
+            }
+
             if($('#terminal_pickup').is(":checked")){
-                fare_total = fare_total+5;
+                fare_total = parseFloat(fare_total) + 5;
             }
 
             $('#amount').val(fare_total);
             $('#rate').val(rate);
 
             $('#span_distance').html('Distance: '+distance+'km');  
-            $('#span_fare').html('Estimated Fare: $'+fare_total);      
+            $('#span_fare').html('Estimated Fare: '+currency_symbol+fare_total);      
 
             $('#estimates').show();
         }else{
@@ -194,6 +201,9 @@
 
     //$("#from_address").geocomplete();
     $(document).ready(function(){
+        //set which fields to display, depenging on typ of booking selected. 
+        set_displays();
+
         //$('#booking_date').datetimepicker();        
         $('#booking_date').datetimepicker({
             dateFormat:'yy-mm-dd',
@@ -201,15 +211,19 @@
         }).datepicker("setDate", new Date());
         
         $("#terminal_pickup").change(function() {
-          set_fare_distance();
+            set_fare_distance();
+        });
+
+        $('#booking-mode').on('change',function(){
+            set_fare_distance();
         });
 
         jQuery('#menu-tarrif').on('click', 'a', function() {
-          var el = jQuery(this);
-          el.addClass('active').siblings('.active').removeClass('active');
-          el.parent().find('.type-value').val(el.attr('data-value'));
-          set_fare_distance();
-          return false;
+            var el = jQuery(this);
+            el.addClass('active').siblings('.active').removeClass('active');
+            el.parent().find('.type-value').val(el.attr('data-value'));
+            set_fare_distance();
+            return false;
         });
         /*
         $('#booking-type').on('click',function(){
@@ -219,29 +233,22 @@
 
         $('#booking-type').on('change',function(){
             //$('#airport-list').show();
-            var booking_type = $(this).val();
-            if(booking_type =='from_airport'){
-                $('#geo-to-wrap').show();
-                $('#geo-from-wrap').hide();
-            }else{
-                $('#geo-from-wrap').show();
-                $('#geo-to-wrap').hide();
-            }
+            set_displays();
         });
         //set lat/lng for address. 
         $('#booking-airport').on("select change blur",function(){
             //console.log($(this).val())
             var airport_lat = $(this).find(':selected').attr('data-lat');
-            var airport_lng = $(this).find(':selected').attr('data-lat');
+            var airport_lng = $(this).find(':selected').attr('data-lng');
             var airport_address = $(this).find(':selected').text();
 
             var booking_type = $('#booking-type').val();
-            console.log(booking_type);
+            //console.log(booking_type);
             if(booking_type =='to_airport'){
                 $('#to_lat').val(airport_lat);
                 $('#to_lng').val(airport_lng);
                 $('#to_address').val(airport_address);
-            }else{
+            }else if(booking_type == 'from_airport'){
                 $('#from_lat').val(airport_lat);
                 $('#from_lng').val(airport_lng);
                 $('#from_address').val(airport_address);
@@ -255,6 +262,8 @@
         details: "#geo-from-wrap",
         detailsAttribute: "data-geo-from",
         componentRestrictions : {'country': ['uk']}
+    }).bind("geocode:result", function(event, result){
+        set_fare_distance();
     });
 
     $("#to_address").geocomplete({
@@ -286,5 +295,22 @@ function get_distance(lat1, lon1, lat2, lon2, unit) {
 		if (unit=="N") { dist = dist * 0.8684 }
 		return dist;
 	}
+}
+
+function set_displays(){
+    var booking_type = $('#booking-type').val();
+        if(booking_type =='from_airport'){
+            $('#geo-to-wrap').show();
+            $('#geo-from-wrap').hide();
+            $('#airport-list').show();
+        }else if(booking_type == 'to_airport'){
+            $('#geo-from-wrap').show();
+            $('#geo-to-wrap').hide();
+            $('#airport-list').show();
+        }else{
+            $('#airport-list').hide();
+            $('#geo-from-wrap').show();
+            $('#geo-to-wrap').show();
+        }
 }
 </script>

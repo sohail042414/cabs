@@ -17,9 +17,10 @@ class CreateBookingsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->default(0);
             $table->integer('driver_id')->default(0);
+            $table->integer('cab_id')->default(0);
             $table->integer('airport_id')->default(0);
-            $table->string('car_type');
-            $table->enum('type', ['from_airport', 'to_airport'])->default('from_airport');
+            $table->enum('car_type', ['standard', 'business', 'vip', 'van', 'bus']);
+            $table->enum('type', ['from_airport', 'to_airport', 'standard'])->default('standard');
             $table->enum('mode', ['one_way', 'two_way'])->default('one_way');
             $table->enum('status', ['pending', 'confirmed', 'delayed', 'canceled', 'completed']);
             $table->string('from_address');

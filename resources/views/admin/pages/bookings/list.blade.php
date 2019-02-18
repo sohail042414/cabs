@@ -21,7 +21,7 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Distance</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
+                                <th  colspan="3" scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,12 +36,13 @@
                                 <td>{{$booking->distanceKilometers()}}</td>
                                 <td>{{ ucfirst($booking->status)}}</td>
                                 <td>
-                                    <a href="/admin/bookings/{{$booking->id}}/edit/">
-                                        Edit
-                                    </a>
-                                    <a href="/admin/bookings/{{$booking->id}}">
-                                        View
-                                    </a>
+                                    <a class="btn btn-primary" href="/admin/bookings/{{$booking->id}}/edit/">Edit</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" href="/admin/bookings/{{$booking->id}}">View</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" href="/admin/bookings/delete/{{$booking->id}}">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

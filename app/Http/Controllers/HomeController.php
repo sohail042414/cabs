@@ -28,9 +28,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         $booking_status = $request->session()->get('booking_status', 'no');
-
         return view('front.home', ['booking_status' => $booking_status]);
     }
 }

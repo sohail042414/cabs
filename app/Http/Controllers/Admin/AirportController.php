@@ -23,9 +23,9 @@ class AirportController extends Controller
     {
 
         $per_page = 10; 
-        //config('app.settings.records_per_page');
+        //config('app.airports.records_per_page');
         $list = Airport::paginate($per_page);
-        return view('admin.pages.settings.list', ['list' => $list]);
+        return view('admin.pages.airports.list', ['list' => $list]);
     }
 
     /**
@@ -36,7 +36,7 @@ class AirportController extends Controller
     public function create()
     {
         $airport = new Airport;
-        return view('admin.pages.settings.create', array('setting' => $airport, 'action' => 'create'));
+        return view('admin.pages.airports.create', array('airport' => $airport, 'action' => 'create'));
     }
 
     /**
@@ -48,23 +48,30 @@ class AirportController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'title' => 'required|min:5',
-            'key' => 'required|min:5',
-            'value' => 'required',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|min:5',
+                'lat' => 'required|numeric',
+                'lng' => 'required|numeric',
+            ],
+            [
+                'lat.required' => 'Provide Latitude.',
+                'lng.required' => 'Provide Longitude.',
+            ]
+        );
 
         $airport = new Airport();
-        $airport->title = $request->input('title');
-        $airport->key = trim($request->input('text'));
-        $airport->value = trim($request->input('value'));
+        $airport->name = $request->input('name');
+        $airport->lat = trim($request->input('lat'));
+        $airport->lng = trim($request->input('lng'));
         if ($airport->save()) {
             $request->session()->flash('status_success', 'Airport created successfully!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/settings');
+        return redirect('/admin/airports');
 
     }
 
@@ -92,7 +99,7 @@ class AirportController extends Controller
      */
     public function edit(Airport $airport)
     {
-        return view('admin.pages.settings.edit', array('setting' => $airport, 'action' => 'update'));
+        return view('admin.pages.airports.edit', array('airport' => $airport, 'action' => 'update'));
     }
 
     /**
@@ -105,13 +112,24 @@ class AirportController extends Controller
     public function update(Request $request, Airport $airport)
     {
 
-        $this->validate($request, [
-            'title' => 'required|min:5',
-            'value' => 'required',
-        ]);
+        //
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|min:5',
+                'lat' => 'required|numeric|max:9999',
+                'lng' => 'required|numeric|max:9999',
+            ],
+            [
+                'lat.required' => 'Provide Latitude.',
+                'lng.required' => 'Provide Longitude.',
+            ]
+        );
 
-        $airport->title = $request->input('title');
-        $airport->value = trim($request->input('value'));
+
+        $airport->name = $request->input('name');
+        $airport->lat = trim($request->input('lat'));
+        $airport->lng = trim($request->input('lng'));
 
         if ($airport->save()) {
             $request->session()->flash('status_success', 'Airport updated successfully!');
@@ -119,7 +137,7 @@ class AirportController extends Controller
             $request->session()->flash('status_error', 'There was some error please try again!');
         }
 
-        return redirect('/admin/settings/' . $airport->id . '/edit');
+        return redirect('/admin/airports/' . $airport->id . '/edit');
 
     }
 
@@ -129,8 +147,16 @@ class AirportController extends Controller
      * @param \App\Models\Airport  $airport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Airport $airport)
+    public function destroy($id, Request $request)
     {
-        //
+        $airport = Airport::find($id);
+
+        if (is_object($airport)) {
+            $airport->delete();
+            $request->session()->flash('status_success', 'Airport deleted!');
+        } else {
+            $request->session()->flash('status_error', 'Airport does not exist!');
+        }
+        return redirect('/admin/airports/');
     }
 }

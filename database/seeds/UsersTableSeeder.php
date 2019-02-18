@@ -9,6 +9,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         DB::table('users')->insert([
@@ -22,6 +23,27 @@ class UsersTableSeeder extends Seeder
             'name' => 'Driver',
             'type' => 'driver',
             'email' => 'driver@gmail.com',
+            'password' => bcrypt('taxi24'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Driver 2',
+            'type' => 'driver',
+            'email' => 'driver2@gmail.com',
+            'password' => bcrypt('taxi24'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Driver 3',
+            'type' => 'driver',
+            'email' => 'driver3@gmail.com',
+            'password' => bcrypt('taxi24'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Driver 3',
+            'type' => 'driver',
+            'email' => 'driver4@gmail.com',
             'password' => bcrypt('taxi24'),
         ]);
 

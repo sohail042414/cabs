@@ -228,7 +228,9 @@ return [
 
     ],
     /* general settings temporary*/
+    /*
     'settings' => [
+        'currency_symbol' => '£',
         'phone' => '073-9582-3243',
         'email' => 'taxiservice@gmail.com',
         'skype' => 'uk_cab',
@@ -239,5 +241,6 @@ return [
         'manager_email' => 'uktaximanager@gmail.com',
         'extra_email' => 'naumankhan051@gmail.com'
     ],
+ */
 
 ];
