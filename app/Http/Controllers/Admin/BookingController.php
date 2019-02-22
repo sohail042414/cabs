@@ -24,7 +24,9 @@ class BookingController extends Controller
     public function index()
     {
         $per_page = config('app.settings.records_per_page');
-        $list = Booking::paginate($per_page);
+        $list = Booking::orderBy('created_at','desc')
+                        ->orderBy('id', 'desc')
+                        ->paginate($per_page);
         return view('admin.pages.bookings.list', ['list' => $list]);
     }
 
@@ -66,7 +68,7 @@ class BookingController extends Controller
             'car_type' => 'required',
             'from_address' => 'required',
             'to_address' => 'required',
-            'phone' => 'required|min:11|max:14',
+            'phone' => 'required|min:9|max:14',
             'email' => 'required|email',
             'booking_date' => 'required',
             'status' => 'required',
@@ -83,8 +85,9 @@ class BookingController extends Controller
         $booking->to_address = $request->input('to_address');
         $booking->car_type = $request->input('car_type');
         $booking->phone = $request->input('phone');
-        //$faq->booking_date = $request->input('booking_date');
-        $booking->booking_date = date('Y-m-d h:i:s', time());
+        $booking->email = $request->input('email');
+        $booking->booking_date = $request->input('booking_date');
+        //$booking->booking_date = date('Y-m-d h:i:s', time());
         $booking->discount = $request->input('discount');
         if ($booking->save()) {
             $request->session()->flash('status_success', 'Booking created successfully!');

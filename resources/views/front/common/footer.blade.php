@@ -7,7 +7,7 @@
             <h3 class="ft-label">ABOUT US</h3>
             <p class="ft-txt">We provide cab services for airports, Call us or make a booking online. Contact us If you want to join us as a partner/driver. </p>
 
-            <ul class="social-small">
+            <ul class="social-small" style="display:none;">
               <li><a href="javascript:void();" class="fa fa-twitter"></a></li>
               <li><a href="javascript:void();" class="fa fa-facebook"></a></li>
               <li><a href="javascript:void();" class="fa fa-pinterest-square"></a></li>
@@ -46,7 +46,7 @@
     <section class="footer-block">
       <div class="container">
         <p>
-          <a href="/terms-conditions">{{ config('app.name', 'UK Airport Cabs') }}</a> 2017 © All Rights Reserved <a href="/terms-conditions">Terms of use</a>
+          <a href="/terms-conditions">{{ config('app.name', 'UK Airport Cabs') }}</a> 2019 © All Rights Reserved <a href="/terms-conditions">Terms of use</a>
         </p>
         <a href="#" class="go-top hidden-xs hidden-ms"></a>
       </div>

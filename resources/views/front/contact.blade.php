@@ -29,7 +29,7 @@
                     <li><a href="#"><span class="fa fa-envelope"></span>{{ config('settings.address') }}</a></li>
                     <li><a href="#"><span class="fa fa-skype"></span>{{ config('settings.skype') }}</a></li>
                     </ul>
-                    <ul class="social-small">
+                    <ul class="social-small" style="display:none;">
                         <li><a href="#" class="fa fa-twitter"></a></li>
                         <li><a href="#" class="fa fa-facebook"></a></li>
                         <li><a href="#" class="fa fa-pinterest-square"></a></li>

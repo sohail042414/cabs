@@ -6,6 +6,7 @@
         data-rate="{{$tarrif->rate}}" 
         id="{{$tarrif->type}}" 
         data-value="{{$tarrif->type}}" 
+        data-capacity="{{$tarrif->capacity}}" 
         class=" m-0 car-select-{{$tarrif->type}} @if($tarrif->type ==old('car_type') || (old('car_type')=='' && $tarrif->type =='standard')) active @endif">
         {{$tarrif->title}}</a>
         @endforeach
@@ -19,7 +20,8 @@
 
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
-                <div class="form-input icon arrowdown">                  
+                <label>Booking Type</label>
+                <div class="form-input icon arrowdown">                                      
                     <select name="type" class="form-select" id="booking-type" >
                         <option @if(old('type') =='standard') selected="selected" @endif value="standard">Standard</option>
                         <option @if(old('type') =='from_airport') selected="selected" @endif value="from_airport">From Airport</option>
@@ -33,8 +35,9 @@
         </div>
 
         <div class="row" style="" id="geo-from-wrap">
-            <div class="col-md-12">
-                <div class="form-input icon location">                    
+            <div class="col-md-12 col-lg-12 col-sm-12">
+            <label>From </label>        
+                <div class="form-input icon location">                     
                 <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
                 <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="{{ old('from_lng') }}">
                 <input type="text" id="from_address" name="from_address" value="{{ old('from_address') }}"
@@ -48,6 +51,7 @@
 
         <div class="row" id="airport-list" style="display:none;">
             <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>Airport</label>     
                 <div class="form-input icon arrowdown">                  
                     <select name="airport_id" id="booking-airport" class="form-select" >
                         <option  value="">Select airport</option>     
@@ -64,6 +68,7 @@
 
         <div class="row" id="geo-to-wrap">
             <div class="col-md-12">
+                <label>To</label>
                 <div class="form-input icon location">
                 <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="{{ old('to_lat')}}">
                 <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="{{ old('to_lng')}}">                  
@@ -78,6 +83,7 @@
 
         <div class="row">
         <div class="col-md-6">
+        <label>Phone</label>
             <div class="form-input icon phone">
             <input type="text" name="phone" value="{{ old('phone')}}" placeholder="Phone Number">
             @if($errors->has('phone'))
@@ -87,6 +93,7 @@
         </div>
         
         <div class="col-md-6">
+        <label>Booking Date/Time</label>
             <div class="form-input icon calendar">
             <input type="text" value="{{ old('booking_date')}}" id="booking_date" name="booking_date" placeholder="Date">
             @if($errors->has('booking_date'))
@@ -99,6 +106,7 @@
 
         <div class="row">
         <div class="col-md-8">
+        <label>Email</label>
             <div class="form-input icon email">
             @php($default_email = isset(Auth::user()->email) ? Auth::user()->email:'')    
             <input type="text" name="email" value="{{ old('email',$default_email)}}" placeholder="Email">
@@ -108,6 +116,7 @@
             </div>
         </div>
         <div class="col-md-4">
+        <label>Mode</label>
             <div class="form-input icon arrowdown">                  
                 <select name="mode" class="form-select" id="booking-mode" >
                     <option @if(old('mode') =='one_way') selected="selected" @endif value="one_way">One Way</option>
@@ -122,9 +131,10 @@
 
         <div class="row">
         <div class="col-md-4">
+        <label>Passangers</label>
             <div class="form-input icon arrowdown">
-            <select name="passangers" class="form-select">
-                @for($number = 1;$number<=10; $number++)
+            <select id="booking-passangers" name="passangers" class="form-select">
+                @for($number = 1;$number<=4; $number++)
                 <option @if(old('passangers') ==$number) selected="selected" @endif value="{{$number}}">{{$number}}</option>
                 @endfor                        
             </select>
@@ -135,6 +145,7 @@
         </div>
 
         <div class="col-md-8">
+            <label>Pickup from Terminal</label>
                 <div class="form-input">
                 <label>
                 <input name="terminal_pickup" id="terminal_pickup" class="checkbox-inp" style="display:none" type="checkbox" value="1">                        
@@ -223,6 +234,7 @@
             el.addClass('active').siblings('.active').removeClass('active');
             el.parent().find('.type-value').val(el.attr('data-value'));
             set_fare_distance();
+            set_passanger_limit();
             return false;
         });
         /*
@@ -312,5 +324,19 @@ function set_displays(){
             $('#geo-from-wrap').show();
             $('#geo-to-wrap').show();
         }
+}
+
+function set_passanger_limit(){
+    var type_capacity = $('#'+$('#car_type').val()).attr('data-capacity');  
+    
+    var html_text = '';
+
+    for(i=1;i<=type_capacity;i++){
+        html_text +='<option value="'+i+'">'+i+'</option>'
+    }
+
+    $('#booking-passangers').html(html_text);
+    //console.log(html_text);
+
 }
 </script>

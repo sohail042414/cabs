@@ -29,7 +29,7 @@
                             <td>{{$term->title}}</td>
                             <td>{{$term->text}}</td>
                             <td>
-                                <a href="/admin/terms/{{$term->id}}/edit/">
+                                <a class="btn btn-primary" href="/admin/terms/{{$term->id}}/edit/">
                                     Edit
                                 </a>
                             </td>

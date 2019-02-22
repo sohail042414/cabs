@@ -34,7 +34,7 @@
                                 <td>{{$car_type->rate}}</td>
                                 <td>{{$car_type->capacity}}</td>
                                 <td>
-                                    <a href="/admin/tarrifs/{{$car_type->id}}/edit/">
+                                    <a class="btn btn-primary" href="/admin/tarrifs/{{$car_type->id}}/edit/">
                                         Edit
                                     </a>
                                 </td>

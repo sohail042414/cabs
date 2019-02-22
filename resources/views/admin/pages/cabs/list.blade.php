@@ -34,7 +34,7 @@
                                 <td>{{$cab->reg_number}}</td>                                
                                 <td>{{$cab->brand}}</td>
                                 <td>
-                                    <a href="/admin/cabs/{{$cab->id}}/edit/">
+                                    <a class="btn btn-primary" href="/admin/cabs/{{$cab->id}}/edit/">
                                         Edit
                                     </a>
                                 </td>

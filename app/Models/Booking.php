@@ -6,6 +6,12 @@ use App\Models\BaseModel;
 
 class Booking extends BaseModel
 {
+    /*
+    protected $dates = [
+        'booking_date',
+    ];
+    */
+
     //
     public function statusList()
     {

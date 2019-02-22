@@ -27,7 +27,7 @@
                             <td>{{$driver->name}}</td>
                             <td>{{$driver->email}}</td>                            
                             <td>
-                                <a href="/admin/drivers/{{$driver->id}}/edit/">
+                                <a class="btn btn-primary" href="/admin/drivers/{{$driver->id}}/edit/">
                                     Edit
                                 </a>
                             </td>

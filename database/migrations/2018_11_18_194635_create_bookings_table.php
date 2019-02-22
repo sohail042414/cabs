@@ -15,6 +15,7 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
+            //$table->string('booking_id')->length(16);
             $table->integer('user_id')->default(0);
             $table->integer('driver_id')->default(0);
             $table->integer('cab_id')->default(0);

@@ -37,7 +37,9 @@ class CustomerController extends Controller
     {
         $per_page = config('settings.records_per_page');
 
-        $list = Booking::where('user_id', Auth::user()->id)
+        $list = Booking::orderBy('created_at','desc')
+            ->orderBy('id', 'desc')
+            ->where('user_id', Auth::user()->id)
             ->orWhere('email', Auth::user()->email)
             ->paginate($per_page);
 

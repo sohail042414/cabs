@@ -35,7 +35,9 @@ class DriverController extends Controller
     public function list()
     {
         $per_page = config('app.settings.records_per_page');
-        $list = Booking::where('driver_id', Auth::user()->id)->paginate($per_page);
+        $list = Booking::orderBy('created_at','desc')
+                        ->orderBy('id', 'desc')
+                        ->where('driver_id', Auth::user()->id)->paginate($per_page);
         return view('front.booking_list', ['list' => $list]);
     }
 

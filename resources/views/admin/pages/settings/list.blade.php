@@ -29,7 +29,7 @@
                             <td>{{$setting->key}}</td>
                             <td>{{$setting->value}}</td>
                             <td>
-                                <a href="/admin/settings/{{$setting->id}}/edit/">
+                                <a class="btn btn-primary" href="/admin/settings/{{$setting->id}}/edit/">
                                     Edit
                                 </a>
                             </td>

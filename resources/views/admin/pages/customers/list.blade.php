@@ -27,7 +27,7 @@
                             <td>{{$customer->name}}</td>
                             <td>{{$customer->email}}</td>                            
                             <td>
-                                <a href="/admin/customers/{{$customer->id}}/edit/">
+                                <a class="btn btn-primary" href="/admin/customers/{{$customer->id}}/edit/">
                                     Edit
                                 </a>
                             </td>
