@@ -8,7 +8,8 @@ use App\Mail\BookingConirmation;
 use App\Models\Booking;
 use App\Models\SimpleMail;
 use Illuminate\Http\Request;
-use App\Mail\BookingConfirmation;
+use App\Mail\BookingReceived;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -45,6 +46,8 @@ class BookingController extends Controller
             'email' => 'required|email',
             'passangers' => 'required|numeric',
             'booking_date' => 'required|date',
+            'origin' => 'max:50',
+            'flight_no' => 'max:30',
         ];
 
         if ($type == 'standard') {
@@ -85,6 +88,9 @@ class BookingController extends Controller
         $booking->status = 'pending';        
         //$booking->booking_date = date('Y-m-d h:i:s', time());
         $booking->booking_date = $request->input('booking_date');
+        //$booking->booking_date = Carbon::createFromFormat('Y-m-d h:i',$request->input('booking_date'));
+        $booking->flight_no = $request->input('flight_no');
+        $booking->origin = $request->input('origin');
         $booking->phone = $request->input('phone');
         $booking->email = $request->input('email');
         $booking->mode = $request->input('mode');
@@ -98,15 +104,14 @@ class BookingController extends Controller
         $booking->rate = !empty($request->input('rate')) ? $request->input('rate') : 0;
         $booking->amount = !empty($request->input('amount')) ? $request->input('amount') : 0;
         $booking->distance = !empty($request->input('distance')) ? $request->input('distance') : 0;
-        //$booking->amount = $request->input('amount');
-        //$booking->distance = $request->input('distance');
+
 
         if ($booking->save()) {
         
-        //$this->sendEmails($booking);
-            $this->sendCustomerEmail($booking);
-            $this->sendMangerEmail($booking);
-            $request->session()->flash('booking_status', 'Your order booked, we will confirm it soon and contact you!');
+            $this->sendEmails($booking);
+            //$this->sendCustomerEmail($booking);
+            //$this->sendMangerEmail($booking);
+            $request->session()->flash('booking_success', 'Your booking created!');
             return redirect('/booking-detail/' . $booking->id);
         } else {
             $request->session()->flash('booking_status', 'Booking not saved, please try again!');
@@ -125,13 +130,26 @@ class BookingController extends Controller
         return view('front.booking_detail', ['booking' => $booking]);
     }
 
+
+    public function mailTest(){
+
+        $booking_id = 30;
+
+        $booking = Booking::find($booking_id);
+
+        $this->sendEmails($booking);
+
+    }
+
+
     private function sendEmails(Booking $booking)
     {
         //email customer. 
         Mail::to($booking->email)->send(new BookingReceived($booking));
         //email manager/admin. 
         
-        /*Mail::to(config('app.settings.manager_email'))
+        /*
+            Mail::to(config('app.settings.manager_email'))
             ->cc(config('app.settings.extra_email'))
             ->send(new BookingReceivedAdmin($booking));
          */
@@ -145,11 +163,11 @@ class BookingController extends Controller
         $message .= "Booking Date/time :" . $booking->booking_date . "<br>";
         $message .= "Pickup address :" . $booking->from_address . "<br>";;
         $message .= "Drop off :" . $booking->to_address . "<br>";;
-        $message .= "Distance :" . $booking->distance . "<br>";;
+        $message .= "Distance : " . $booking->distance . "<br>";;
         $message .= "Type :" . $booking->car_type . "<br>";;
         $message .= "Rate :" . $booking->rate . "<br>";;
         $message .= "Fare :" . $booking->amount . "<br>";
-
+        
         $message .= "<br><b> To check status of your Booking at any time, click herer!! </b>";
 
         $message .= " <br> Thank you for choosing our service!!!!";

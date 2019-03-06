@@ -72,9 +72,19 @@ class SettingsTableSeeder extends Seeder
                 'value' => '10',
             ),
             array(
-                'currency_symbol' => 'Currency symbol ',
+                'title' => 'Currency symbol ',
                 'key' => 'currency_symbol',
                 'value' => '£',
+            ),
+            array(
+                'title' => 'Distance Unit (k:kilometers,mi:miles)',
+                'key' => 'distance_unit',
+                'value' => 'mi',
+            ),
+            array(
+                'title' => 'Google API Key',
+                'key' => 'google_api_key',
+                'value' => 'AIzaSyB07oKE_GD9xHgPEHrielmn1__vD3OsaYs',
             ),
         );
 

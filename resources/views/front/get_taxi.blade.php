@@ -28,10 +28,7 @@
 
 
       <div class="row">
-        <div class="col-md-6 offset-md-3">
-
-          <p class="text-center">Also you can order a taxi online</p>
-
+        <div class="col-md-8 offset-md-2">
           <div class="search-block-box">
             @include('front.common.taxi_form')
           </div>

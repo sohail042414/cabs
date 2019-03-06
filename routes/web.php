@@ -42,6 +42,9 @@ Route::post('/make-booking', 'BookingController@make_booking');
  * Only Customer routes 
  * 
  */
+//test emails
+Route::get('/mail-test', 'BookingController@mailTest');
+
 
  //display booking it is open for any user for now
 Route::get('/booking-detail/{booking_id}', 'BookingController@detail');

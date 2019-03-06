@@ -1,4 +1,9 @@
 <form  class="form-box pb-4" action="{{ url('/make-booking')}}" method="post">
+<p class="text-center">
+<b> You may make a boooking here, or you may call us at 
+    {{ config('settings.phone') }}
+</b>
+</p>
     {{ csrf_field() }}
         <div id="menu-tarrif" class="menu-wrap">
         @foreach($tarrifs as $tarrif)
@@ -10,7 +15,6 @@
         class=" m-0 car-select-{{$tarrif->type}} @if($tarrif->type ==old('car_type') || (old('car_type')=='' && $tarrif->type =='standard')) active @endif">
         {{$tarrif->title}}</a>
         @endforeach
-
         <input type="hidden" class="type-value" value="{{ old('car_type','standard') }}" name="car_type" id="car_type">
         <input type="hidden" value="{{ old('distance','0') }}" name="distance" id="distance">
         <input type="hidden" value="{{ old('rate') }}" name="rate" id="rate">
@@ -41,7 +45,7 @@
                 <input data-geo-from="lat" class="lat-lng" type="hidden" id="from_lat" name="from_lat" value="{{ old('from_lat') }}">
                 <input data-geo-from="lng" class="lat-lng" type="hidden" id="from_lng" name="from_lng" value="{{ old('from_lng') }}">
                 <input type="text" id="from_address" name="from_address" value="{{ old('from_address') }}"
-                    aria-required="true" aria-invalid="false" placeholder="From ...">
+                    aria-required="true" aria-invalid="false" placeholder="eg. Heathrow East Terminal ....">
                 @if($errors->has('from_address'))
                 <span class="error-message">{{ $errors->first('from_address') }}</span>                   
                 @endif                
@@ -73,13 +77,38 @@
                 <input data-geo-to="lat" class="lat-lng" type="hidden" id="to_lat" name="to_lat" value="{{ old('to_lat')}}">
                 <input data-geo-to="lng" class="lat-lng" type="hidden" id="to_lng" name="to_lng" value="{{ old('to_lng')}}">                  
                 <input id="to_address" type="text" name="to_address" value="{{ old('to_address') }}"
-                    placeholder="To...">
+                    placeholder="eg. The Oval, London, UK ...">
                 @if($errors->has('to_address'))
                 <span class="error-message">{{ $errors->first('to_address') }}</span>                   
                 @endif
                 </div>
             </div>
         </div>
+
+        <div class="row" id="origin-wrap" style="display:none;">
+            <div class="col-md-6 col-lg-6 col-sm-12">
+                <label>Origin (Optional)</label>
+                <div class="form-input icon location">
+                <input id="origin" type="text" name="origin" value="{{ old('origin') }}"
+                    placeholder="">
+                    @if($errors->has('origin'))
+                    <span class="error-message">{{ $errors->first('origin') }}</span>                   
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-sm-12">
+                <label>Flight # (Optional)</label>
+                <div class="form-input icon">
+                    <input id="flight_no" type="text" name="flight_no" value="{{ old('flight_no') }}"
+                        placeholder="">
+                        @if($errors->has('flight_no'))
+                        <span class="error-message">{{ $errors->first('flight_no') }}</span>                   
+                        @endif
+                </div>
+            </div>
+        </div>
+
 
         <div class="row">
         <div class="col-md-6">
@@ -182,7 +211,7 @@
         //console.log('from_lat:'+from_lat+' || from_lng:'+from_lng+' || to_lat:'+to_lat+' || to_lng:'+to_lng);
 
         if((from_lat != '') && (from_lng != '') && (to_lng != '') &&(to_lng != '')){        
-            var distance = get_distance(from_lat,from_lng,to_lat,to_lng,'K');
+            var distance = get_distance(from_lat,from_lng,to_lat,to_lng,'M');
             distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
             $('#distance').val(distance);
             var fare_total = rate*distance;
@@ -199,7 +228,7 @@
             $('#amount').val(fare_total);
             $('#rate').val(rate);
 
-            $('#span_distance').html('Distance: '+distance+'km');  
+            $('#span_distance').html('Distance: '+distance+' mi');  
             $('#span_fare').html('Estimated Fare: '+currency_symbol+fare_total);      
 
             $('#estimates').show();
@@ -304,7 +333,7 @@ function get_distance(lat1, lon1, lat2, lon2, unit) {
 		dist = dist * 180/Math.PI;
 		dist = dist * 60 * 1.1515;
 		if (unit=="K") { dist = dist * 1.609344 }
-		if (unit=="N") { dist = dist * 0.8684 }
+		if (unit=="M") { dist = dist * 0.8684 }
 		return dist;
 	}
 }
@@ -315,14 +344,17 @@ function set_displays(){
             $('#geo-to-wrap').show();
             $('#geo-from-wrap').hide();
             $('#airport-list').show();
+            $('#origin-wrap').show();
         }else if(booking_type == 'to_airport'){
             $('#geo-from-wrap').show();
             $('#geo-to-wrap').hide();
             $('#airport-list').show();
+            $('#origin-wrap').show();
         }else{
             $('#airport-list').hide();
             $('#geo-from-wrap').show();
             $('#geo-to-wrap').show();
+            $('#origin-wrap').hide();
         }
 }
 

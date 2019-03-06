@@ -21,9 +21,8 @@
 
     <div class="container">
     <div class="row">
-
-        <div class="col-md-6">
-        <div class="search-block-box gray">
+        <div class="col-md-8 col-lg-8 col-sm-12">
+        <div class="search-block-box gray">        
             @include('front.common.taxi_form')
         </div>        
     </div>    

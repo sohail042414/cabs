@@ -6,11 +6,12 @@ use App\Models\BaseModel;
 
 class Booking extends BaseModel
 {
-    /*
-    protected $dates = [
-        'booking_date',
-    ];
-    */
+    
+    // protected $dates = [
+    //     'booking_date',
+    // ];
+
+    //protected $dateFormat = 'Y-m-d h:i';
 
     //
     public function statusList()
@@ -42,6 +43,11 @@ class Booking extends BaseModel
     public function driver()
     {
         return $this->belongsTo('App\Models\Driver');
+    }
+
+    public function cartype()
+    {
+        return $this->belongsTo('App\Models\CarType','car_type','type');
     }
 
     public function getDistance()
@@ -96,17 +102,69 @@ class Booking extends BaseModel
 
     public function showBookingFields()
     {
-        return array(
-            'id' => 'Booking Id',
-            'car_type' => 'Car Type',
-            'from_address' => 'From',
-            'to_address' => 'To',
-            'distance' => 'Distance',
-            'rate' => 'Rate',
-            'amount' => 'Amount',
-            'mode' => 'Mode',
-            'status' => 'Status'
-        );
+
+        $data =  [            
+            'id' => [
+                'title'=>'Booking Id',
+                'value'=>$this->id,
+            ],
+            'status' => [
+                'title'=>'Status',
+                'value'=> ucfirst($this->status),
+            ],
+            'date' => [
+                'title'=>'Date',
+                'value'=>date('Y-m-d',strtotime($this->booking_date)),
+                //'value'=>$this->booking_date,
+            ],
+            'time' => [
+                'title'=>'Time',
+                'value'=>date('H:i',strtotime($this->booking_date)),
+            ],
+            'from_address' => [
+                'title'=>'From',
+                'value'=>$this->from_address,
+            ],
+            'to_address' => [
+                'title'=>'To',
+                'value'=>$this->to_address,
+            ],
+
+            'origin' => [
+                'title'=>'Origin',
+                'value'=>$this->origin,
+            ],
+            'flight_no' => [
+                'title'=>'Flight #',
+                'value'=>$this->flight_no,
+            ],
+            'email' => [
+                'title'=>'Email',
+                'value'=>$this->email,
+            ],
+            'phone' => [
+                'title'=>'Phone',
+                'value'=>$this->phone,
+            ],
+            'car_type' => [
+                'title'=>'Car Type',
+                'value'=>$this->cartype->title,
+            ],
+            'rate' => [
+                'title'=>'Rate',
+                'value'=> config('settings.currency_symbol').$this->rate."/mi",
+            ],            
+            'distance' => [
+                'title'=>'Distance',
+                'value'=> $this->distance."mi",
+            ],
+            'fare' => [
+                'title'=>'Fare',
+                'value'=> config('settings.currency_symbol').$this->amount,
+            ],
+        ];
+
+        return $data;
     }
 
     public function showCabFields()

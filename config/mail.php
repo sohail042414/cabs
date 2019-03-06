@@ -29,7 +29,7 @@ return [
     |
      */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'ukairportcabi.taxi'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
      */
 
-    'port' => env('MAIL_PORT', 465),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
      */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'uktaximanager@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'booking@ukairportcabi.taxi'),
         'name' => env('MAIL_FROM_NAME', 'UK Airport Taxies'),
     ],
 

@@ -26,25 +26,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="col">Booking Date</th>
-                                            <th scope="col">{{ date('d/m/Y',strtotime($booking->booking_date))}}</th>
-                                        </tr>
-
-                                        <tr>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">{{ date('h:i',strtotime($booking->booking_date))}}</th>
-                                        </tr>
                                     
                                         <tr>
                                             <th scope="col">Created At </th>
                                             <th scope="col">{{ date('d/m/Y h:i',strtotime($booking->created_at))}}</th>
                                         </tr>
 
-                                        @foreach ($booking->showBookingFields() as $field => $title)
+                                        @foreach ($booking->showBookingFields() as $field => $data)
                                         <tr>
-                                            <td scope="row">{{$title}}</td>
-                                            <td>{{ $booking->{$field} }}</td>
+                                            <td scope="row">{{$data['title']}}</td>
+                                            <td>{{ $data['value'] }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

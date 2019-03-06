@@ -18,6 +18,18 @@
 
   <section class="tx-section">
         <div class="container">
+            @if(Session::has('booking_success'))
+            <div class="row">
+                <div class="col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+                    <div class="alert  alert-success">               
+                        <div class="header"><b>Success!</b></div>
+                        <p>Your booking created, we will review details and contact you soon! 
+                        <br>For any queries contact us at <b>{{config('settings.phone')}}</b></p>   
+                    </div>
+                </div>
+            </div>
+            @endif
+            
             <div class="row">
                 <div class="{{$detail_css_class}}">
 
@@ -26,14 +38,14 @@
                           <table class="table color-table primary-table">
                               <thead>
                                   <tr>
-                                      <th colspan="2">Bookig </th>
+                                      <th colspan="2">Bookig Details </th>
                                 </tr>
                               </thead>
                               <tbody>
-                                @foreach($booking->showBookingFields() as $field => $title)
+                                @foreach($booking->showBookingFields() as $field => $data)
                                   <tr>
-                                      <td>{{$title}}</td>
-                                      <td>{{ $booking->{$field} }}</td>
+                                      <td>{{$data['title']}}</td>
+                                      <td>{{ $data['value'] }}</td>
                                   </tr>   
                                 @endforeach
                               </tbody>
