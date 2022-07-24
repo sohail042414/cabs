@@ -52,7 +52,7 @@ class TermsController extends Controller
         //
         $this->validate($request, [
             'sort_order' => 'numeric',
-            'title' => 'required|min:10',
+            'title' => 'required|min:5',
             'text' => 'required|min:50',
         ]);
 
@@ -94,7 +94,7 @@ class TermsController extends Controller
      */
     public function edit(Term $term)
     {
-        return view('admin.pages.terms.edit', array('Term' => $term, 'action' => 'update'));
+        return view('admin.pages.terms.edit', array('term' => $term, 'action' => 'update'));
     }
 
     /**
@@ -109,7 +109,7 @@ class TermsController extends Controller
 
         $this->validate($request, [
             'sort_order' => 'numeric',
-            'title' => 'required|min:10',
+            'title' => 'required|min:5',
             'text' => 'required|min:50',
         ]);
 

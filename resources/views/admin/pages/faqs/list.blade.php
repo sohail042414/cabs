@@ -17,7 +17,7 @@
                             <th scope="col">Sort Order</th>
                             <th scope="col">Question</th>
                             <th scope="col">Answer</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" colspan="2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,9 +29,10 @@
                             <td>{{$faq->question}}</td>
                             <td>{{$faq->answer}}</td>
                             <td>
-                                <a href="/admin/faqs/{{$faq->id}}/edit/">
-                                    Edit
-                                </a>
+                                <a class="btn btn-primary" href="/admin/faqs/{{$faq->id}}/edit/">Edit</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="/admin/faqs/delete/{{$faq->id}}">Delete</a>
                             </td>
                         </tr>
                         @endforeach

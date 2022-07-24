@@ -2,15 +2,17 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-2 col-lg-2">
-            @include('admin.pages.bookings.sidebar')
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-md-12 col-lg-12">
+            <a class="btn btn-primary" href="/admin/bookings/create">Create Booking</a>
         </div>
-        <div class="col-md-10 col-lg-10">
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">Bookings</div>
                 <div class="card-body">
-
+                <p>Pencil icon: <span class="glyphicon glyphicon-pencil"></span></p>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -19,9 +21,9 @@
                                 <th scope="col">To</th>
                                 <th scope="col">Car Type</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Distance</th>
+                                <th scope="col">Time</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
+                                <th  colspan="3" scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,16 +34,27 @@
                                 <td>{{$booking->from_address}}</td>
                                 <td>{{$booking->to_address}}</td>
                                 <td>{{$booking->car_type}}</td>
-                                <td>{{$booking->booking_date}}</td>
-                                <td>{{$booking->distanceKilometers()}}</td>
-                                <td>{{ ucfirst($booking->status)}}</td>
+                                <td>{{ date('d/m/Y',strtotime($booking->booking_date))}}</td>
+                                <td>{{ date('h:i',strtotime($booking->booking_date))}}</td>
                                 <td>
-                                    <a href="/admin/bookings/{{$booking->id}}/edit/">
-                                        Edit
-                                    </a>
-                                    <a href="/admin/bookings/{{$booking->id}}">
-                                        View
-                                    </a>
+                                    @if($booking->status == 'pending')
+                                    <span style="color:red;">
+                                    {{ ucfirst($booking->status)}}
+                                    </span>
+                                    @else
+                                    <span style="color:green;">
+                                    {{ ucfirst($booking->status)}}
+                                    </span>
+                                    @endif
+                                </td>
+                                <td>                                
+                                    <a class="btn btn-primary btn-sm" href="/admin/bookings/{{$booking->id}}/edit/">Edit</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" href="/admin/bookings/{{$booking->id}}">View</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" href="/admin/bookings/delete/{{$booking->id}}">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

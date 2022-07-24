@@ -494,8 +494,10 @@ header.header .main-menu > li > a{
 
 .homepage-1 {
     min-height: 700px;
-    background: url(../img/homepage-2-bg.jpg) center center;
-    background-size: cover;
+    /* background: url(../img/homepage-2-bg.jpg) center center;
+    background-size: cover; */
+    position: relative;
+    z-index: 10;
 }
 
 .homepage-title{
@@ -726,43 +728,25 @@ header.header .main-menu .submenu{
 .menu-wrap a:hover,
 .menu-wrap a.active {
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.75);
 }
 
-.car-select-standard {
-    background: url(../img/icon-car-1.png) top center no-repeat
-}
-
-.car-select-business {
-    background: url(../img/icon-car-2.png) top center no-repeat
-}
-
-.car-select-vip{
-    background: url(../img/icon-car-3.png) top center no-repeat
-}
-
-.car-select-van {
-    background: url(../img/icon-car-4.png) top center no-repeat
-}
-
-
-/*
 .menu-icon-1 {
-    background: url(../img/icon-car-1.png) top center no-repeat
+    background: url(../img/icons/icon-car-1.png) top center no-repeat
 }
 
 .menu-icon-2 {
-    background: url(../img/icon-car-2.png) top center no-repeat
+    background: url(../img/icons/icon-car-2.png) top center no-repeat
 }
 
 .menu-icon-3 {
-    background: url(../img/icon-car-3.png) top center no-repeat
+    background: url(../img/icons/icon-car-3.png) top center no-repeat
 }
 
 .menu-icon-4 {
-    background: url(../img/icon-car-4.png) top center no-repeat
+    background: url(../img/icons/icon-car-4.png) top center no-repeat
 }
-*/
+
 
 /*-------------------------------------------
                 FORM BOX
@@ -897,11 +881,10 @@ header.header .main-menu .submenu{
 }
 
 
-
-
-
-
-
+section{
+    position: relative !important;
+    z-index:10;
+}
 
 /*-------------------------------------------
                 TITLE SECTOIN
@@ -918,6 +901,9 @@ header.header .main-menu .submenu{
     text-transform: uppercase;
     letter-spacing: -0.02em;
     margin: 0px;
+}
+.tx-heading h5{
+
 }
 
 .tx-heading h2 {
@@ -972,13 +958,19 @@ hr.lg {
 }
 
 
+
 /*-------------------------------------------
             SERVICES WRAP
 -------------------------------------------*/
 
+
+
 .tx-section,
 .services-wrap {
+    background-color:#fff;
     padding: 80px 0;
+    position: relative;
+    z-index: 10;
 }
 
 .services-block {
@@ -1083,6 +1075,7 @@ hr.lg {
 .driver-wrap {
     position: relative;
     padding: 100px 0;
+    background-color:#fff;
 }
 
 .tx-car {
@@ -1331,19 +1324,34 @@ hr.lg {
 }
 
 .ft-list li {
-    margin-left: 30px;
+    padding-left: 15px;
+    position: relative;
+    border-bottom: 1px dotted #6f6f6f;
+    margin: 0 0 10px;
+}
+
+.ft-list li::after{
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f107";
+    color:#FFC61A;
+    transform: rotate(-90deg);
+    position: absolute;
+    left: 0px;
+    top: 4px;
 }
 
 .ft-list li a {
     display: block;
     color: #CCCCCC;
     font-weight: 500;
-    /* background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKoAAAABCAYAAABOrTWvAAAAGXRFW…RBVHjaYnR3d//PAAGMQAxm79ixg9HDw2NUfFR80IgDBBgAvfWN1mHQu4wAAAAASUVORK5CYII=) 0 100% repeat-x; */
-    margin: 0 0 10px;
     padding: 0 0 10px 0;
     font-size: 14px;
     transition: color 0.5s ease;
-    border-bottom: 1px dotted #6f6f6f
 }
 
 
@@ -1443,7 +1451,8 @@ hr.lg {
 .contact-section{
     background: #FFC61A;
     padding: 20px;
-
+    position: relative;
+    z-index: 10;
 }
 
 .contact-block{
@@ -1817,5 +1826,337 @@ hr.lg {
     .menu-wrap{
         padding-top:42px
     }
+}
 
+/*------------------------------------------------
+                    LOGIN PAGE
+------------------------------------------------*/
+
+.bg{
+    background-color: #fafafa;
+}
+.login-wrapper{
+    padding:40px;
+    margin-top:100px;
+    background: #ffffff;
+    border-radius: 30px;
+    border:1px solid #eee;
+}
+.login-header{
+    margin-bottom: 15px;
+}
+.login-header .lo-title{
+    color: #1f1f1f;
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.login-txt-block{
+    margin-bottom: 15px;
+}
+.login-txt-block:last-child{
+    margin: 0px;
+}
+.login-txt-block input{
+    background-color:#f1f1f1;
+    width: 100%;
+    padding:10px;
+    outline: none;
+    border:none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 12px 35px 12px 18px;
+    border: 1px solid #E6E6E6;
+}
+.login-txt-block input:focus{
+    border:1px solid #FFC61A;
+}
+
+.login-txt-block .login-btn {
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 13px 60px;
+    line-height: 1.4em;
+    color: #fff;
+    background-color: #1F1F1F;
+    border: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    width:100%;
+    margin: auto;
+    font-weight: 600;
+}
+
+.login-txt-block .login-btn:hover {
+    color: #FFC61A;
+    cursor: pointer;
+}
+.forgot{
+    margin-top:15px;
+    font-size: 12px;
+    color:#1F1F1F;
+    display: block;
+    text-align: center;
+    margin-top:10px;
+}
+.forgot:hover{
+    color:#FFC61A;
+}
+
+
+
+/*-----------------------------------------
+                BOOOKINGS
+-----------------------------------------*/
+
+.bookings-wrap{
+    border:1px solid #e3e7ea;
+    font-size: 14px;
+}
+
+.bookings-wrap .table{
+    margin: 0px;
+}
+
+.bookings-wrap .table th{
+    background-color:#1F1F1F;
+    color:#d1d1d1;
+}
+
+
+.btn-sml{
+    background: none;
+    border:none;
+    font-size: 14px;
+}
+
+.btn-sml:bover {
+    cursor: pointer;
+    color: #FFC61A;
+}
+
+.label-bookings {
+    padding: 3px 10px;
+    line-height: 13px;
+    color: #ffffff;
+    font-weight: 400;
+    border-radius: 4px;
+    font-size: 75%;
+    display: inline-block;
+}
+
+.label-success {
+    background-color: #24d2b5;
+}
+.label-pending {
+    background-color: #FFC61A;
+}
+.label-cancel {
+    background-color: #ff5c6c;
+}
+
+/*-----------------------------------------
+            BOOOKINGS CONFIRMATION
+-----------------------------------------*/
+
+.booking-confirmation{
+    background:#fff;
+    border:1px solid #e7e8ec;
+    /* padding:15px; */
+    position: relative;
+
+}
+
+.bk-icon{
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+    color:red;
+}
+.booking-top{
+    padding: 15px;
+}
+.booking-ft{
+    padding:15px;
+    border-top:1px solid #e7e8ec;
+    background-color:#f5f6fa;
+}
+
+.booking-fm{
+    position: relative;
+}
+
+.booking-fm .booking-title{
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 12px;
+    color:#707276;
+    /* margin-bottom: 10px; */
+    display: block;
+}
+
+.booking-fm p{
+    font-weight: bold;
+    margin: 0px;
+    font-size: 14px;
+    color:#706f6f;
+}
+
+.booking-fm .fa{
+    position: absolute;
+    right: 0px;
+    top: 13px;
+    font-size: 20px;
+    color: #d4d5d6;
+}
+.fa-l{
+    left: -30px;
+}
+.booking-confirmation .status{
+    padding: 5px;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.status.success {
+    background-color: #24d2b5;
+}
+.status.pending {
+    background-color: #FFC61A;
+}
+.status.canceled {
+    background-color: #ff5c6c;
+}
+
+
+
+/*-----------------------------------------
+                MEDIA 
+-----------------------------------------*/
+
+
+@media only screen and (max-width: 768px) {
+    
+    .booking-fm{
+        margin-bottom: 10px;
+    }
+
+  }
+
+
+  /**********************
+  Styles form developer
+  *************************/
+
+
+  
+.car-select-standard {
+    background: url(../img/icon-car-1.png) top center no-repeat
+}
+
+.car-select-business {
+    background: url(../img/icon-car-2.png) top center no-repeat
+}
+
+.car-select-vip{
+    background: url(../img/icon-car-3.png) top center no-repeat
+}
+
+.car-select-van {
+    background: url(../img/icon-car-4.png) top center no-repeat
+}
+
+.gray .menu-wrap a.active {
+    cursor: pointer;
+    background-color: #FFC61A;
+}
+
+.error-message {
+    font-size: 17px;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    display: block;
+    color: red;
+    /* padding: 5px 10px; */
+    margin-bottom: 5px;
+}
+
+.success-message {
+    font-size: 17px;
+    text-align: left;
+    width: 100%;
+    display: block;
+    color: green;
+    margin-bottom: 5px;
+}
+.login-wrapper .error-message{
+    font-size: 15px;
+    /* background: #1f1f1f30; */
+    padding: 5px;
+    width: 100%;
+    display: block;
+    color: red;
+    /* padding: 5px 10px; */
+    margin-bottom: 5px;
+}
+
+.tx-btn-small {
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 10px 60px;
+    color: #1f1f1f;
+    line-height: 0.9em;
+    padding: 9px 40px 11px;
+    font-weight: 700;
+    text-transform: lowercase;
+    border: 0;
+    color: #1F1F1F;
+    background: #FFC61A;
+    display: inline-block;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+.breadcrumbs{
+    display: none !important;
+}
+
+.alert {
+    margin: 0px 0;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 4px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 4px;
+    -moz-background-clip: padding;
+    border-radius: 4px;
+    background-clip: padding-box;
+    text-align: center;
+    padding: 30px 30px 40px 30px;
+    position: relative;
+    background: #fff;
+    border-color: transparent !important;
+}
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+.alert-error {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #9F340A;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }

@@ -30,7 +30,7 @@
                                 <td>{{$service->short_description}}</td>                                
                                 <td>{{$service->description}}</td>
                                 <td>
-                                    <a href="/admin/services/{{$service->id}}/edit/">
+                                    <a class="btn btn-primary" href="/admin/services/{{$service->id}}/edit/">
                                         Edit
                                     </a>
                                 </td>

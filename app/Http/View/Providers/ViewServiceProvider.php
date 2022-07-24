@@ -4,9 +4,11 @@ namespace App\Http\View\Providers;
 
 use App\Models\Tarrif;
 use App\Models\Service;
+use App\Models\Term;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Airport;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -36,9 +38,21 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         // Using Closure based composers...
-        View::composer('front.get_taxi', function ($view) {
+        View::composer('front.common.taxi_form', function ($view) {
             $tarrifs = Tarrif::paginate(4);
-            $view->with('tarrifs', $tarrifs);
+            $airports = Airport::paginate(20);
+            $view->with(
+                [
+                    'tarrifs' => $tarrifs,
+                    'airports' => $airports
+                ]
+            );
+        });
+
+        // Using Closure based composers...
+        View::composer('front.terms', function ($view) {
+            $terms = Term::paginate(10);
+            $view->with('terms', $terms);
         });
     }
 

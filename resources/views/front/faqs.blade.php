@@ -29,13 +29,13 @@
                         <div id="accordion">
                             @foreach($faqs as $faq)
                             <div class="card">
-                              <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <div class="card-header collapsed" id="heading-{{ $faq->id }}" data-toggle="collapse" data-target="#collapse-{{ $faq->id }}" aria-expanded="true" aria-controls="collapse-{{ $faq->id }}">
                                 <h5 class="mb-0">
                                     {{$faq->question}}
                                 </h5>
                               </div>
                           
-                              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                              <div id="collapse-{{ $faq->id }}" class="collapse" aria-labelledby="heading-{{ $faq->id }}" data-parent="#accordion">
                                 <div class="card-body">
                                 {{$faq->answer}}
                                 </div>

@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CarType;
 use App\Models\SimpleMail;
-use App\Mail\BookingConfirmed;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Cab;
 
 class BookingController extends Controller
 {
@@ -25,7 +24,9 @@ class BookingController extends Controller
     public function index()
     {
         $per_page = config('app.settings.records_per_page');
-        $list = Booking::paginate($per_page);
+        $list = Booking::orderBy('created_at','desc')
+                        ->orderBy('id', 'desc')
+                        ->paginate($per_page);
         return view('admin.pages.bookings.list', ['list' => $list]);
     }
 
@@ -67,7 +68,7 @@ class BookingController extends Controller
             'car_type' => 'required',
             'from_address' => 'required',
             'to_address' => 'required',
-            'phone' => 'required|min:11|max:14',
+            'phone' => 'required|min:9|max:14',
             'email' => 'required|email',
             'booking_date' => 'required',
             'status' => 'required',
@@ -84,8 +85,9 @@ class BookingController extends Controller
         $booking->to_address = $request->input('to_address');
         $booking->car_type = $request->input('car_type');
         $booking->phone = $request->input('phone');
-        //$faq->booking_date = $request->input('booking_date');
-        $booking->booking_date = date('Y-m-d h:i:s', time());
+        $booking->email = $request->input('email');
+        $booking->booking_date = $request->input('booking_date');
+        //$booking->booking_date = date('Y-m-d h:i:s', time());
         $booking->discount = $request->input('discount');
         if ($booking->save()) {
             $request->session()->flash('status_success', 'Booking created successfully!');
@@ -106,27 +108,83 @@ class BookingController extends Controller
     {
         $booking = Booking::find($id);
 
-        $this->sendConfirmationEmail($booking);
+        //$cab = $booking->cab;
 
-        // echo "<pre>";
-        // print_r($booking->getAttributes());
-        // exit;
+        //$free_cabs = Cab::where('status', 'free')->get();
+
         return view(
             'admin.pages.bookings.show',
             array(
-                'booking' => $booking
+                'booking' => $booking,
+                //'free_cabs' => $free_cabs
             )
         );
         //
     }
 
-    public function confirm(Request $request, $id)
+    /**
+     * Shows assign cab to booking screen. 
+     */
+
+    public function assign($id, Request $request)
     {
+
         $booking = Booking::find($id);
 
-        $booking->status = 'confirmed';
+        $cabs = Cab::where('status', 'free')->get();
+            //->where('type', $booking->car_type)
+        /*
+        if (count($cabs) == 0) {
+            $request->session()->flash('status_error', 'There are not free cabs, All booked!');
+        }
+         */
+        // $car_types = CarType::all();
+
+        // $status_list = $booking->statusList();
+
+        // $modes = $booking->modeList();
+
+        return view(
+            'admin.pages.bookings.assign',
+            array(
+                'booking' => $booking,
+                'cabs' => $cabs,
+            )
+        );
+    }
+
+    /**
+     * Confirm assignment. 
+     */
+
+    public function confirm(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'cab_id' => 'required',
+        ]);
+
+        $booking = Booking::find($id);
+
+        if (!is_object($booking) || $booking->status == 'pending') {
+            $booking->status = 'confirmed';
+        }
+
+        $cab = Cab::find($request->input('cab_id'));
+
+        if (!is_object($cab)) {
+            $request->session()->flash('status_error', 'No cab available, all booked!');
+            return redirect('/admin/bookings/' . $id);
+        }
+
+        $cab->status = 'booked';
+        $cab->save();
+
+        $booking->cab_id = $cab->id;
+        $booking->driver_id = $cab->driver_id;
+
         if ($booking->save()) {
-            $this->sendConfirmationEmail($booking);
+            //$this->sendConfirmationEmail($booking);
             $request->session()->flash('status_success', 'Booking confirmed!');
         } else {
             $request->session()->flash('status_error', 'There was some error please try again!');
@@ -140,8 +198,6 @@ class BookingController extends Controller
     {
 
         Mail::to($booking->email)->send(new BookingConfirmed($booking));
-
-
         echo "After herere";
         exit;
 
@@ -162,6 +218,9 @@ class BookingController extends Controller
 
         $message .= " <br> Have nice Trip............!!!!";
 
+        $sent = mail($booking->email, $subject, $message);
+        
+        /*
         $status = SimpleMail::make()
             ->setTo($booking->email, "Customer")
             ->setFrom('uktaximanager@gmail.com', "Uk Taxi Manager")
@@ -175,6 +234,7 @@ class BookingController extends Controller
             echo "Email not sent";
             exit;
         }
+         */
     }
 
 
@@ -259,9 +319,17 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $booking = Booking::find($id);
+
+        if (is_object($booking)) {
+            $booking->delete();
+            $request->session()->flash('status_success', 'Booking deleted!');
+        } else {
+            $request->session()->flash('status_error', 'Booking does not exist!');
+        }
+        return redirect('/admin/bookings/');
     }
 
     private function sendMangerEmail(Booking $booking)

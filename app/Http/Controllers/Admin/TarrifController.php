@@ -21,7 +21,7 @@ class TarrifController extends Controller
      */
     public function index()
     {
-        $per_page = config('app.settings.records_per_page');
+        $per_page = config('settings.records_per_page');
         $list = CarType::paginate($per_page);
         return view('admin.pages.tarrifs.list', ['list' => $list]);
     }

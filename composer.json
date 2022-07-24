@@ -6,8 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "doctrine/dbal": "^2.0",
+        "doctrine/inflector": "1.1.0",
+        "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "twilio/sdk": "^6.40"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -46,6 +50,9 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     }
 }

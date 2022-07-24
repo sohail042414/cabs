@@ -6,6 +6,13 @@ use App\Models\BaseModel;
 
 class Booking extends BaseModel
 {
+    
+    // protected $dates = [
+    //     'booking_date',
+    // ];
+
+    //protected $dateFormat = 'Y-m-d h:i';
+
     //
     public function statusList()
     {
@@ -25,6 +32,22 @@ class Booking extends BaseModel
             'one_way' => 'One Way',
             'two_way' => 'Two Way',
         );
+    }
+
+    public function cab()
+    {
+        return $this->belongsTo('App\Models\Cab');
+    }
+
+
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Driver');
+    }
+
+    public function cartype()
+    {
+        return $this->belongsTo('App\Models\CarType','car_type','type');
     }
 
     public function getDistance()
@@ -76,6 +99,98 @@ class Booking extends BaseModel
         }
     }
 
+
+    public function showBookingFields()
+    {
+
+        $data =  [            
+            'id' => [
+                'title'=>'Booking Id',
+                'value'=>$this->id,
+            ],
+            'status' => [
+                'title'=>'Status',
+                'value'=> ucfirst($this->status),
+            ],
+            'date' => [
+                'title'=>'Date',
+                'value'=>date('Y-m-d',strtotime($this->booking_date)),
+                //'value'=>$this->booking_date,
+            ],
+            'time' => [
+                'title'=>'Time',
+                'value'=>$this->booking_time
+            ],
+            'from_address' => [
+                'title'=>'From',
+                'value'=>$this->from_address,
+            ],
+            'to_address' => [
+                'title'=>'To',
+                'value'=>$this->to_address,
+            ]
+        ];
+
+        if($this->type =='from_airport' || $this->type == 'to_airport'){
+            $data['origin'] = [
+                'title'=>'Origin',
+                'value'=>$this->origin,
+            ];
+
+            $data['flight_no'] = [
+                'title'=>'Flight #',
+                'value'=>$this->flight_no,
+            ];
+        }
+        
+        $data['email'] = [
+                'title'=>'Email',
+                'value'=>$this->email,
+            ];
+            $data['phone'] = [
+                'title'=>'Phone',
+                'value'=>$this->phone,
+            ];
+            $data['car_type'] = [
+                'title'=>'Car Type',
+                'value'=>$this->cartype->title,
+            ];
+            $data['rate'] = [
+                'title'=>'Rate',
+                'value'=> config('settings.currency_symbol').$this->rate."/mi",
+            ];          
+            $data['distance'] = [
+                'title'=>'Distance',
+                'value'=> $this->distance."mi",
+            ];
+            $data['fare'] = [
+                'title'=>'Fare',
+                'value'=> config('settings.currency_symbol').$this->amount,
+            ];
+
+
+        return $data;
+    }
+
+    public function showCabFields()
+    {
+        return array(
+            'type' => 'Type',
+            'name' => 'Name',
+            'model' => 'Model',
+            'reg_number' => 'Registration Number',
+            'brand' => 'Brand',
+        );
+    }
+
+
+    public function showDriverFields()
+    {
+        return array(
+            'name' => 'Driver Name',
+            'email' => 'Driver Email',
+        );
+    }
 
 
 }
